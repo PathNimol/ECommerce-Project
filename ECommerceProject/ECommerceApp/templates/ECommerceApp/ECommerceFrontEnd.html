@@ -1,0 +1,3365 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tech Com - Professional Computer Solutions</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+      /* ========== PROFESSIONAL COLOR SYSTEM ========== */
+      :root {
+        --bg-primary: #252b4a;
+        --bg-secondary: #1a1f3a;
+        --bg-tertiary: #2d1b4e;
+        --text-primary: #ffffff;
+        --text-secondary: rgba(255, 255, 255, 0.8);
+        --text-tertiary: rgba(255, 255, 255, 0.6);
+        --brand: #6366f1;
+        --brand-light: #818cf8;
+        --brand-dark: #4f46e5;
+        --purple: #8b5cf6;
+        --purple-light: #a78bfa;
+        --blue: #3b82f6;
+        --blue-light: #60a5fa;
+        --accent: #10b981;
+        --border-light: rgba(255, 255, 255, 0.1);
+        --border-medium: rgba(255, 255, 255, 0.2);
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+      }
+
+      /* ========== TYPOGRAPHY & GLOBAL ========== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+      }
+
+      body {
+        background: linear-gradient(135deg, #1a1f3a 0%, #2d1b4e 100%);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        color: var(--text-primary);
+        line-height: 1.6;
+        font-size: 14px;
+        min-height: 100vh;
+        padding-top: 70px;
+      }
+
+      /* Headings */
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-weight: 600;
+        letter-spacing: -0.5px;
+        margin-bottom: 0.5rem;
+        color: white;
+      }
+      p {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .text-muted {
+        color: rgba(255, 255, 255, 0.6) !important;
+      }
+      /* Modal dark theme */
+      .modal-content {
+        background: var(--bg-primary) !important;
+        border: 1px solid var(--border-light) !important;
+        color: white !important;
+      }
+      .modal-header {
+        background: rgba(99, 102, 241, 0.2) !important;
+        border-bottom: 1px solid var(--border-light) !important;
+        color: white !important;
+      }
+      .modal-body {
+        background: var(--bg-primary) !important;
+        color: white !important;
+      }
+      .modal-footer {
+        background: var(--bg-primary) !important;
+        border-top: 1px solid var(--border-light) !important;
+      }
+      .modal-title {
+        color: white !important;
+      }
+      /* Dropdown dark theme */
+      .dropdown-menu {
+        background: var(--bg-primary) !important;
+        border: 1px solid var(--border-light) !important;
+      }
+      .dropdown-item {
+        color: rgba(255, 255, 255, 0.9) !important;
+      }
+      .dropdown-item:hover {
+        background: rgba(99, 102, 241, 0.2) !important;
+        color: white !important;
+      }
+      /* Alert dark theme */
+      .alert {
+        background: var(--bg-primary) !important;
+        border: 1px solid var(--border-light) !important;
+        color: white !important;
+      }
+      /* List group dark theme */
+      .list-group-item {
+        background: var(--bg-primary) !important;
+        border-color: var(--border-light) !important;
+        color: white !important;
+      }
+      .list-group-item:hover {
+        background: rgba(99, 102, 241, 0.15) !important;
+      }
+      /* Close button dark theme */
+      .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+      }
+      .btn-close:hover {
+        filter: invert(1) grayscale(100%) brightness(250%);
+      }
+
+      /* ========== HEADER ========== */
+      .page-header {
+        background: rgba(37, 43, 74, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border-light);
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: var(--shadow-md);
+      }
+
+      .page-header .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .logo-badge {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: var(--brand);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
+
+      .logo-img {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        object-fit: contain;
+        background: var(--bg-tertiary);
+        padding: 4px;
+        flex-shrink: 0;
+      }
+
+      .logo-text h1 {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--brand);
+        margin: 0;
+      }
+
+      .logo-text small {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .page-header nav {
+        flex: 1;
+        margin: 0 2rem;
+      }
+
+      .page-header .nav {
+        border: none;
+      }
+
+      .page-header .nav-link {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s;
+        padding: 0.5rem 1rem;
+      }
+
+      .page-header .nav-link:hover {
+        color: var(--brand);
+      }
+
+      .header-stats {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+      }
+
+      .header-badge {
+        display: inline-block;
+        background: var(--bg-tertiary);
+        color: var(--text-secondary);
+        padding: 0.35rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .header-stats small {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+      }
+
+      /* ========== HERO SECTION ========== */
+      .hero-section {
+        padding: 4rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          rgba(26, 31, 58, 0.8) 0%,
+          rgba(45, 27, 78, 0.8) 100%
+        );
+        border-radius: 20px;
+        margin: 2rem 1.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(99, 102, 241, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        background: linear-gradient(
+          135deg,
+          var(--text-primary) 0%,
+          var(--brand-light) 100%
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .hero-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+        max-width: 600px;
+      }
+
+      .hero-buttons .btn {
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s;
+      }
+
+      .hero-buttons .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+      }
+
+      .hero-illustration {
+        position: relative;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .hero-icon {
+        font-size: 8rem;
+        color: var(--brand);
+        position: relative;
+        z-index: 2;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
+
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        opacity: 0.3;
+        animation: float 4s ease-in-out infinite;
+      }
+
+      .shape-1 {
+        width: 80px;
+        height: 80px;
+        background: var(--purple);
+        top: 10%;
+        left: 10%;
+        animation-delay: 0s;
+      }
+
+      .shape-2 {
+        width: 60px;
+        height: 60px;
+        background: var(--brand);
+        top: 60%;
+        right: 20%;
+        animation-delay: 1s;
+      }
+
+      .shape-3 {
+        width: 100px;
+        height: 100px;
+        background: var(--blue);
+        bottom: 10%;
+        left: 20%;
+        animation-delay: 2s;
+      }
+
+      .shape-4 {
+        width: 70px;
+        height: 70px;
+        background: var(--accent);
+        top: 30%;
+        right: 10%;
+        animation-delay: 1.5s;
+      }
+
+      /* ========== SERVICES SECTION ========== */
+      .services-section {
+        padding: 3rem 1.5rem;
+      }
+
+      .section-header {
+        margin-bottom: 3rem;
+      }
+
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .section-underline {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--brand) 0%, var(--purple) 100%);
+        margin: 0 auto;
+        border-radius: 2px;
+        position: relative;
+      }
+
+      .section-underline::after {
+        content: "";
+        position: absolute;
+        width: 40px;
+        height: 4px;
+        background: var(--accent);
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 2px;
+      }
+
+      .service-card {
+        background: var(--bg-primary);
+        border-radius: 16px;
+        padding: 2rem;
+        border: 1px solid var(--border-light);
+        transition: all 0.3s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(99, 102, 241, 0.2);
+        border-color: var(--brand);
+      }
+
+      .service-icon {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+        font-size: 2rem;
+        color: white;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .service-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 1rem;
+      }
+
+      .service-description {
+        color: var(--text-secondary);
+        line-height: 1.7;
+        font-size: 0.95rem;
+        flex-grow: 1;
+      }
+
+      /* ========== PROJECTS SECTION ========== */
+      .projects-section {
+        padding: 3rem 1.5rem;
+      }
+
+      /* ========== MAIN LAYOUT ========== */
+      .layout-main {
+        padding: 0;
+        max-width: 1600px;
+        margin: 0 auto;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 280px 1fr 340px;
+        gap: 1.5rem;
+      }
+
+      @media (max-width: 1200px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 2.5rem;
+        }
+        .hero-subtitle {
+          font-size: 1rem;
+        }
+        .hero-section {
+          padding: 2rem 1rem;
+          margin: 1rem;
+        }
+        .hero-icon {
+          font-size: 5rem;
+        }
+        .section-title {
+          font-size: 2rem;
+        }
+        .services-section,
+        .projects-section {
+          padding: 2rem 1rem;
+        }
+      }
+
+      /* ========== CARD COMPONENT ========== */
+      .card-soft {
+        background: var(--bg-primary);
+        border-radius: 12px;
+        border: 1px solid var(--border-light);
+        box-shadow: var(--shadow-sm);
+        padding: 1.5rem;
+        transition: box-shadow 0.2s, border-color 0.2s;
+      }
+
+      .card-soft:hover {
+        border-color: var(--border-medium);
+        box-shadow: var(--shadow-md);
+      }
+
+      .card-title {
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .card-title i {
+        color: var(--brand);
+      }
+
+      .card-heading {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      /* ========== SIDEBAR ========== */
+      .sidebar-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .sidebar-section:last-child {
+        margin-bottom: 0;
+      }
+
+      .sidebar-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-tertiary);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+        display: block;
+      }
+
+      /* ========== BUTTONS ========== */
+      .btn {
+        border-radius: 6px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: all 0.2s;
+        border: none;
+      }
+
+      .btn-primary {
+        background: var(--brand);
+        color: white;
+      }
+
+      .btn-primary:hover {
+        background: var(--brand-light);
+        color: white;
+      }
+
+      .btn-primary:active {
+        background: var(--brand-dark);
+      }
+
+      .btn-success {
+        background: var(--accent);
+        color: white;
+      }
+
+      .btn-success:hover {
+        background: #059669;
+        color: white;
+      }
+
+      .btn-outline-primary {
+        color: var(--brand);
+        border: 1px solid var(--border-medium);
+        background: var(--bg-primary);
+      }
+
+      .btn-outline-primary:hover {
+        background: var(--bg-tertiary);
+        border-color: var(--brand);
+      }
+
+      .btn-sm {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+      }
+
+      /* ========== FORMS ========== */
+      .form-control,
+      .form-select {
+        background: rgba(37, 43, 74, 0.5);
+        border: 1px solid var(--border-light);
+        border-radius: 6px;
+        padding: 0.6rem 0.8rem;
+        font-size: 0.9rem;
+        color: white;
+        transition: border-color 0.2s, box-shadow 0.2s;
+      }
+
+      .form-control:focus,
+      .form-select:focus {
+        background: rgba(37, 43, 74, 0.7);
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        color: white;
+      }
+
+      .form-control::placeholder,
+      .form-select::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+      }
+
+      .form-label {
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .form-control-sm,
+      .form-select-sm {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+      }
+
+      /* ========== PRODUCT CARD ========== */
+      .product-card {
+        background: var(--bg-primary);
+        border: 1px solid var(--border-light);
+        border-radius: 10px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--brand-light);
+      }
+
+      .product-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background: var(--bg-tertiary);
+        transition: transform 0.3s;
+      }
+
+      .product-card:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Product Grid - 3 columns per row, 2 rows visible, vertical scroll */
+      .product-scroll-container {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 800px; /* Height for 2 rows (approximately) */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        scrollbar-color: var(--brand) transparent;
+        padding-right: 5px;
+      }
+      .product-scroll-container::-webkit-scrollbar {
+        width: 8px;
+      }
+      .product-scroll-container::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .product-scroll-container::-webkit-scrollbar-thumb {
+        background: var(--brand);
+        border-radius: 4px;
+      }
+      .product-scroll-container::-webkit-scrollbar-thumb:hover {
+        background: var(--brand-light);
+      }
+      .product-scroll-container .row {
+        flex-wrap: wrap;
+        margin: 0;
+      }
+      #productList .col-6,
+      #productList .col-md-4,
+      #productList .col-md-3 {
+        flex: 0 0 auto;
+        width: 33.33333333% !important;
+        max-width: 33.33333333% !important;
+      }
+      @media (max-width: 768px) {
+        #productList .col-6,
+        #productList .col-md-4,
+        #productList .col-md-3 {
+          width: 50% !important;
+          max-width: 50% !important;
+        }
+      }
+      @media (max-width: 576px) {
+        #productList .col-6,
+        #productList .col-md-4,
+        #productList .col-md-3 {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+      }
+
+      #productList .card {
+        margin-bottom: 1rem;
+      }
+
+      .product-body {
+        padding: 1rem;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        line-height: 1.4;
+      }
+
+      .product-category {
+        font-size: 0.8rem;
+        color: var(--text-tertiary);
+        margin-bottom: 0.5rem;
+      }
+
+      .product-price {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--brand);
+        margin-bottom: 0.75rem;
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: auto;
+      }
+
+      /* ========== TABLE ========== */
+      .table {
+        font-size: 0.85rem;
+        background: var(--bg-primary);
+        color: transparent;
+      }
+
+      .table thead {
+        background: rgba(99, 102, 241, 0.3);
+        border: none;
+      }
+
+      .table th {
+        color: white;
+        font-weight: 600;
+        border: none;
+        padding: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+        font-size: 0.75rem;
+        border-color: var(--border-light);
+      }
+
+      .table td {
+        background: var(--bg-primary);
+        border-color: var(--border-light);
+        padding: 0.75rem;
+        vertical-align: middle;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .table tbody tr {
+        background: var(--bg-primary);
+      }
+
+      .table tbody tr:nth-child(even) {
+        background: rgba(37, 43, 74, 0.5);
+      }
+
+      .table tbody tr:hover {
+        background: rgba(99, 102, 241, 0.15);
+      }
+
+      /* ========== BADGES & PILLS ========== */
+      .badge {
+        border-radius: 4px;
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+
+      .badge-primary {
+        background: var(--brand);
+        color: white;
+      }
+
+      .badge-success {
+        background: var(--accent);
+        color: white;
+      }
+
+      /* ========== CAROUSEL - STYLED LIKE FACEBOOK COVER ========== */
+      .carousel {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      /* Banner Carousel - Facebook Cover Style */
+      #bannerCarousel .carousel-inner {
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      #bannerCarousel .carousel-item {
+        height: 450px;
+        background: linear-gradient(
+          180deg,
+          #0f4c75 0%,
+          #3282b8 50%,
+          #bbe1fa 100%
+        );
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Cloud effects */
+      #bannerCarousel .carousel-item::before {
+        content: "";
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        top: 20%;
+        left: 10%;
+        filter: blur(40px);
+        z-index: 1;
+      }
+
+      #bannerCarousel .carousel-item::after {
+        content: "";
+        position: absolute;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        bottom: 15%;
+        right: 15%;
+        filter: blur(35px);
+        z-index: 1;
+      }
+
+      #bannerCarousel .promo-product-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 300px;
+        z-index: 5;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+      }
+
+      #bannerCarousel .promo-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10;
+        padding: 40px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        color: white;
+      }
+
+      #bannerCarousel .promo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        z-index: 12;
+      }
+
+      #bannerCarousel .promo-left {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      #bannerCarousel .promo-title {
+        font-size: 48px;
+        font-weight: 900;
+        line-height: 1;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        margin: 0;
+      }
+
+      #bannerCarousel .promo-discount {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 10px;
+      }
+
+      #bannerCarousel .promo-discount-label {
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        opacity: 0.9;
+      }
+
+      #bannerCarousel .promo-discount-value {
+        font-size: 56px;
+        font-weight: 900;
+        line-height: 1;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      #bannerCarousel .promo-right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 15px;
+        z-index: 12;
+      }
+
+      #bannerCarousel .promo-order-now {
+        font-size: 18px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      #bannerCarousel .promo-qr {
+        width: 100px;
+        height: 100px;
+        background: transparent;
+        padding: 8px;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      #bannerCarousel .promo-qr img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      #bannerCarousel .promo-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 12;
+        margin-top: auto;
+      }
+
+      #bannerCarousel .promo-website {
+        font-size: 14px;
+        font-weight: 500;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        letter-spacing: 1px;
+      }
+
+      /* Products Carousel - Latest Products Design */
+      #slideCarousel .carousel-inner {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      #slideCarousel .carousel-item {
+        height: 450px;
+        background: linear-gradient(
+          180deg,
+          #0f4c75 0%,
+          #3282b8 50%,
+          #bbe1fa 100%
+        );
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Cloud effects for products */
+      #slideCarousel .carousel-item::before {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        top: 15%;
+        right: 10%;
+        filter: blur(40px);
+        z-index: 1;
+      }
+
+      #slideCarousel .carousel-item::after {
+        content: "";
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        bottom: 20%;
+        left: 12%;
+        filter: blur(30px);
+        z-index: 1;
+      }
+
+      #slideCarousel .product-slide-content {
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 40px 50px;
+        color: white;
+      }
+
+      #slideCarousel .product-slide-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      #slideCarousel .product-slide-title {
+        font-size: 42px;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        margin: 0;
+      }
+
+      #slideCarousel .product-slide-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 350px;
+        height: 350px;
+        z-index: 5;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+      }
+
+      #slideCarousel .product-slide-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        margin-top: auto;
+        z-index: 12;
+        text-align: center;
+      }
+
+      #slideCarousel .product-slide-price {
+        font-size: 32px;
+        font-weight: 700;
+        color: white;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        letter-spacing: 1px;
+      }
+
+      #slideCarousel .product-slide-name {
+        font-size: 24px;
+        font-weight: 700;
+        color: white;
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+        max-width: 400px;
+        text-align: center;
+        letter-spacing: 0.5px;
+        line-height: 1.3;
+      }
+
+      /* Carousel Controls */
+      .carousel-control-prev,
+      .carousel-control-next {
+        width: 40px;
+        opacity: 0.8;
+        transition: opacity 0.3s;
+      }
+
+      .carousel-control-prev:hover,
+      .carousel-control-next:hover {
+        opacity: 1;
+      }
+
+      /* Carousel Indicators */
+      .carousel-indicators [data-bs-target] {
+        background-color: var(--brand);
+        border: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        opacity: 0.5;
+        transition: opacity 0.3s;
+      }
+
+      .carousel-indicators .active {
+        opacity: 1;
+      }
+
+      /* ========== FOOTER ========== */
+      .footer {
+        background: linear-gradient(135deg, #1a1f3a 0%, #2d1b4e 100%);
+        border-top: 2px solid var(--border-light);
+        padding: 3rem 1.5rem 2rem;
+        margin-top: 4rem;
+      }
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .footer-section h5 {
+        color: var(--brand);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+      .footer-section p,
+      .footer-section a {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        text-decoration: none;
+        display: block;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s;
+      }
+      .footer-section a:hover {
+        color: var(--brand-light);
+      }
+      .footer-section i {
+        margin-right: 0.5rem;
+        color: var(--brand);
+        width: 20px;
+      }
+      .footer-bottom {
+        border-top: 1px solid var(--border-light);
+        padding-top: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .footer-bottom-left {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+      }
+      .footer-bottom-right {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+      }
+      .footer-bottom-right a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        margin: 0 0.5rem;
+      }
+      .footer-bottom-right a:hover {
+        color: var(--brand-light);
+      }
+      .footer-social {
+        display: flex;
+        gap: 1rem;
+        margin-top: 0.5rem;
+      }
+      .footer-social a {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        transition: color 0.3s;
+      }
+      .footer-social a:hover {
+        color: var(--brand);
+      }
+
+      /* ========== MODAL ========== */
+      /* Modal styles are defined above in dark theme section */
+
+      /* ========== UTILITIES ========== */
+      .pointer {
+        cursor: pointer;
+      }
+
+      .opacity-light {
+        color: var(--text-tertiary);
+      }
+
+      .text-brand {
+        color: var(--brand);
+      }
+
+      .divider {
+        border-top: 1px solid var(--border-light);
+        margin: 1rem 0;
+      }
+
+      /* ========== RESPONSIVE ========== */
+      @media (max-width: 768px) {
+        .page-header {
+          flex-direction: column;
+          gap: 1rem;
+          text-align: center;
+        }
+
+        .page-header nav {
+          margin: 0;
+          display: none;
+        }
+
+        .layout-main {
+          padding: 1.5rem 1rem;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .product-card img {
+          height: 150px;
+        }
+
+        #bannerCarousel .carousel-item {
+          height: 350px;
+        }
+
+        #bannerCarousel .promo-overlay {
+          padding: 30px;
+        }
+
+        #bannerCarousel .promo-title {
+          font-size: 32px;
+        }
+
+        #bannerCarousel .promo-discount-value {
+          font-size: 42px;
+        }
+
+        #bannerCarousel .promo-product-image {
+          width: 220px;
+          height: 220px;
+        }
+
+        #bannerCarousel .promo-qr {
+          width: 80px;
+          height: 80px;
+        }
+
+        #slideCarousel .carousel-item {
+          height: 350px;
+        }
+
+        #slideCarousel .product-slide-image {
+          width: 250px;
+          height: 250px;
+        }
+
+        #slideCarousel .product-slide-title {
+          font-size: 32px;
+        }
+
+        #slideCarousel .product-slide-price {
+          font-size: 28px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        #bannerCarousel .carousel-item {
+          height: 300px;
+        }
+
+        #bannerCarousel .promo-overlay {
+          padding: 20px;
+        }
+
+        #bannerCarousel .promo-title {
+          font-size: 24px;
+        }
+
+        #bannerCarousel .promo-discount-value {
+          font-size: 32px;
+        }
+
+        #bannerCarousel .promo-product-image {
+          width: 150px;
+          height: 150px;
+        }
+
+        #bannerCarousel .promo-order-now {
+          font-size: 14px;
+        }
+
+        #bannerCarousel .promo-qr {
+          width: 60px;
+          height: 60px;
+        }
+
+        #bannerCarousel .promo-website {
+          font-size: 12px;
+        }
+
+        #slideCarousel .carousel-item {
+          height: 300px;
+        }
+
+        #slideCarousel .product-slide-content {
+          padding: 20px;
+        }
+
+        #slideCarousel .product-slide-image {
+          width: 180px;
+          height: 180px;
+        }
+
+        #slideCarousel .product-slide-title {
+          font-size: 24px;
+        }
+
+        #slideCarousel .product-slide-price {
+          font-size: 24px;
+        }
+
+        #slideCarousel .product-slide-name {
+          font-size: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="singleInvoice" class="d-none"></div>
+
+    <!-- ========== HEADER ========== -->
+    <header class="page-header">
+      <div class="logo" onclick="showHomePage()" style="cursor: pointer">
+        <div id="logoWrapper">
+          <div class="logo-badge" id="logoBadge">TC</div>
+          <img
+            id="logoImg"
+            class="logo-img d-none"
+            src="/placeholder.svg"
+            alt="Logo"
+          />
+        </div>
+        <div class="logo-text">
+          <h1>Tech Com</h1>
+          <small>Service & Repair Solutions</small>
+        </div>
+      </div>
+      <nav class="d-none d-md-flex">
+        <ul class="nav" id="menuNav"></ul>
+      </nav>
+      <div class="header-stats">
+        <a
+          href="/ECommerceBackEnd/"
+          class="btn btn-sm btn-outline-light me-2"
+          style="text-decoration: none"
+        >
+          <i class="fas fa-cog me-1"></i>Admin Panel
+        </a>
+        <small>Orders: <strong id="topTotalOrders">0</strong></small>
+      </div>
+    </header>
+
+    <div class="layout-main">
+      <!-- ========== HERO SECTION ========== -->
+      <section class="hero-section mb-5">
+        <div class="container-fluid">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <h1 class="hero-title">Welcome to Tech Com</h1>
+              <p class="hero-subtitle">
+                A leading computer service and repair team with a passion for
+                providing high-quality computer products, expert technical
+                support, and reliable repair services for both individuals and
+                businesses.
+              </p>
+              <div class="hero-buttons mt-4">
+                <a href="#products" class="btn btn-primary btn-lg me-3">
+                  <i class="fas fa-laptop me-2"></i>Browse Products
+                </a>
+                <a href="#services" class="btn btn-outline-light btn-lg">
+                  <i class="fas fa-info-circle me-2"></i>Our Services
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-6 text-center">
+              <div class="hero-illustration">
+                <div class="floating-shapes">
+                  <div class="shape shape-1"></div>
+                  <div class="shape shape-2"></div>
+                  <div class="shape shape-3"></div>
+                  <div class="shape shape-4"></div>
+                </div>
+                <div class="hero-icon">
+                  <i class="fas fa-laptop-code"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SERVICES SECTION ========== -->
+      <section id="services" class="services-section mb-5">
+        <div class="container-fluid">
+          <div class="section-header text-center mb-5">
+            <h2 class="section-title">Services</h2>
+            <div class="section-underline"></div>
+          </div>
+          <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+              <div class="service-card">
+                <div
+                  class="service-icon"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      var(--purple) 0%,
+                      var(--purple-light) 100%
+                    );
+                  "
+                >
+                  <i class="fas fa-desktop"></i>
+                </div>
+                <h4 class="service-title">Computer Sales</h4>
+                <p class="service-description">
+                  Our computer sales service helps businesses and individuals
+                  find the perfect computers, laptops, and accessories to meet
+                  their needs. We offer the latest technology from trusted
+                  brands.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="service-card">
+                <div
+                  class="service-icon"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      var(--brand) 0%,
+                      var(--brand-light) 100%
+                    );
+                  "
+                >
+                  <i class="fas fa-tools"></i>
+                </div>
+                <h4 class="service-title">Computer Repair</h4>
+                <p class="service-description">
+                  Our computer repair service focuses on diagnosing and fixing
+                  hardware and software issues quickly and efficiently. We
+                  provide expert solutions to get your devices running smoothly.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="service-card">
+                <div
+                  class="service-icon"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      var(--blue) 0%,
+                      var(--blue-light) 100%
+                    );
+                  "
+                >
+                  <i class="fas fa-headset"></i>
+                </div>
+                <h4 class="service-title">Technical Support</h4>
+                <p class="service-description">
+                  Our technical support service helps businesses resolve IT
+                  issues and optimize their technology infrastructure. We offer
+                  remote and on-site support for all your technical needs.
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+              <div class="service-card">
+                <div
+                  class="service-icon"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      var(--accent) 0%,
+                      #34d399 100%
+                    );
+                  "
+                >
+                  <i class="fas fa-code"></i>
+                </div>
+                <h4 class="service-title">E-Commerce Solutions</h4>
+                <p class="service-description">
+                  Our e-commerce development service offers end-to-end online
+                  store solutions. We build modern, responsive websites with
+                  secure payment processing and inventory management.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== BANNER CAROUSEL ========== -->
+      <div class="card-soft mb-4">
+        <div class="card-heading mb-3">
+          <div>
+            <i class="fas fa-images" style="color: var(--brand)"></i>
+            Featured Promotions
+          </div>
+        </div>
+        <div id="bannerCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-indicators" id="bannerIndicators"></div>
+          <div class="carousel-inner" id="bannerInner"></div>
+        </div>
+      </div>
+
+      <!-- ========== PRODUCTS CAROUSEL ========== -->
+      <!-- ========== PROJECTS/PRODUCTS SECTION ========== -->
+      <section id="products" class="projects-section mb-5">
+        <div class="container-fluid">
+          <div class="section-header text-center mb-5">
+            <h2 class="section-title">Featured Products</h2>
+            <div class="section-underline"></div>
+          </div>
+          <div class="card-soft">
+            <div
+              id="slideCarousel"
+              class="carousel slide"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-indicators" id="slideIndicators"></div>
+              <div class="carousel-inner" id="slideInner"></div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#slideCarousel"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#slideCarousel"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== 3-COLUMN LAYOUT ========== -->
+      <div class="grid">
+        <!-- LEFT SIDEBAR -->
+        <aside class="card-soft">
+          <div class="sidebar-label">Catalog</div>
+
+          <div class="sidebar-section">
+            <div class="card-heading" style="font-size: 0.95rem">
+              📦 Categories
+            </div>
+            <button
+              class="btn btn-primary btn-sm w-100 mb-2"
+              onclick="loadProducts()"
+            >
+              <i class="fas fa-th me-2"></i>All Products
+            </button>
+            <div id="categoryList"></div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-label">Search & Filter</div>
+            <div class="mb-2">
+              <input
+                type="text"
+                id="searchName"
+                class="form-control form-control-sm"
+                placeholder="Search products..."
+                oninput="applyProductFilter()"
+              />
+            </div>
+            <div class="row g-2">
+              <div class="col-6">
+                <input
+                  type="number"
+                  id="minPrice"
+                  class="form-control form-control-sm"
+                  placeholder="Min"
+                  oninput="applyProductFilter()"
+                />
+              </div>
+              <div class="col-6">
+                <input
+                  type="number"
+                  id="maxPrice"
+                  class="form-control form-control-sm"
+                  placeholder="Max"
+                  oninput="applyProductFilter()"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-label">Sidebar Images</div>
+            <div id="sidebarLeftImages" class="vstack gap-2"></div>
+          </div>
+        </aside>
+
+        <!-- CENTER MAIN -->
+        <main>
+          <div class="card-soft mb-4">
+            <div class="sidebar-label">Current Selection</div>
+            <div
+              id="menuDetailPreview"
+              class="border rounded p-3"
+              style="
+                min-height: 80px;
+                font-size: 0.9rem;
+                background: var(--bg-tertiary);
+                color: var(--text-secondary);
+              "
+            >
+              Select a category to view details
+            </div>
+          </div>
+
+          <div class="card-soft mb-4">
+            <div class="card-heading">
+              <span>
+                <i class="fas fa-laptop" style="color: var(--brand)"></i>
+                Computer Products
+              </span>
+              <small class="text-muted" id="productCountText"></small>
+            </div>
+            <div class="product-scroll-container">
+              <div class="row g-3" id="productList"></div>
+            </div>
+          </div>
+
+          <div class="card-soft">
+            <div class="card-heading">
+              <span>
+                <i class="fas fa-history" style="color: var(--brand)"></i>
+                Order History
+              </span>
+            </div>
+            <ul
+              id="orderHistory"
+              class="list-group list-group-flush small"
+            ></ul>
+          </div>
+        </main>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="card-soft">
+          <div class="sidebar-section">
+            <div class="sidebar-label">Promotions</div>
+            <div id="sidebarRightImages" class="vstack gap-2"></div>
+          </div>
+
+          <div class="sidebar-section">
+            <div class="card-heading mb-3" style="font-size: 0.95rem">
+              <span>
+                <i class="fas fa-shopping-cart" style="color: var(--brand)"></i>
+                Shopping Cart
+              </span>
+              <span class="badge badge-primary" id="cartCount">0</span>
+            </div>
+            <div class="table-responsive">
+              <table
+                class="table table-sm"
+                style="background: transparent !important"
+              >
+                <thead style="background: transparent !important">
+                  <tr>
+                    <th
+                      style="background: transparent !important; color: white"
+                    >
+                      Product
+                    </th>
+                    <th
+                      style="background: transparent !important; color: white"
+                    >
+                      Qty
+                    </th>
+                    <th
+                      style="background: transparent !important; color: white"
+                    >
+                      Price
+                    </th>
+                    <th
+                      style="background: transparent !important; color: white"
+                    >
+                      Total
+                    </th>
+                    <th
+                      style="background: transparent !important; color: white"
+                    ></th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="cartBody"
+                  style="background: transparent !important"
+                ></tbody>
+              </table>
+              <div
+                class="border-top pt-2"
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  font-weight: 600;
+                "
+              >
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="sidebar-section">
+            <div class="sidebar-label">Customer Info</div>
+            <input
+              type="text"
+              id="customerName"
+              class="form-control form-control-sm mb-2"
+              placeholder="Full Name"
+            />
+            <input
+              type="text"
+              id="customerPhone"
+              class="form-control form-control-sm"
+              placeholder="Phone Number"
+            />
+          </div>
+
+          <div class="sidebar-section">
+            <div class="card-heading" style="font-size: 0.95rem">
+              Bank QR Code
+            </div>
+            <select id="qrSelect" class="form-select form-select-sm mb-2">
+              <option disabled selected>Select Bank QR</option>
+            </select>
+            <div id="qrImageContainer" class="mb-2"></div>
+            <input
+              type="file"
+              id="qrUpload"
+              accept="image/*"
+              class="form-control form-control-sm"
+            />
+          </div>
+
+          <button class="btn btn-success w-100 mb-3" onclick="checkout()">
+            <i class="fas fa-check-circle me-2"></i>Place Order
+          </button>
+
+          <div id="invoiceSection" class="d-none">
+            <div class="card-heading mb-2" style="font-size: 0.95rem">
+              <i class="fas fa-receipt" style="color: var(--brand)"></i>
+              Latest Invoice
+            </div>
+            <div
+              id="invoiceContent"
+              class="border rounded p-2 mb-2 small"
+              style="
+                max-height: 200px;
+                overflow: auto;
+                background: var(--bg-tertiary);
+              "
+            ></div>
+            <button
+              class="btn btn-outline-primary btn-sm w-100"
+              onclick="window.print()"
+            >
+              <i class="fas fa-print me-2"></i>Print
+            </button>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="sidebar-section">
+            <div class="card-heading mb-2" style="font-size: 0.95rem">
+              <i class="fas fa-chart-bar" style="color: var(--brand)"></i>
+              Order Report
+            </div>
+            <div
+              id="orderReport"
+              class="small"
+              style="color: var(--text-secondary)"
+            ></div>
+          </div>
+        </aside>
+      </div>
+
+      <br />
+      <div class="card-soft">
+        <div id="footerImages"></div>
+      </div>
+    </div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h5>Tech Com</h5>
+          <p>Professional Computer Service & Repair Solutions</p>
+          <p>
+            Your trusted partner for all computer needs. We provide quality
+            products and excellent service.
+          </p>
+          <div class="footer-social">
+            <a href="#" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h5>Quick Links</h5>
+          <a href="#" onclick="showHomePage(); return false;"
+            ><i class="fas fa-home"></i> Home</a
+          >
+          <a href="#" onclick="showAboutUs(); return false;"
+            ><i class="fas fa-info-circle"></i> About Us</a
+          >
+          <a href="#" onclick="showPrivacyPolicy(); return false;"
+            ><i class="fas fa-shield-alt"></i> Privacy Policy</a
+          >
+          <a href="#productList"><i class="fas fa-laptop"></i> Products</a>
+          <a href="#cartSection"
+            ><i class="fas fa-shopping-cart"></i> Shopping Cart</a
+          >
+        </div>
+        <div class="footer-section">
+          <h5>Contact Us</h5>
+          <p><i class="fas fa-map-marker-alt"></i> Phnom Penh, Cambodia</p>
+          <p><i class="fas fa-phone"></i> (855) 123-4567</p>
+          <p><i class="fas fa-envelope"></i> info@techcom.com</p>
+          <p><i class="fas fa-clock"></i> Mon-Sat: 8:00 AM - 6:00 PM</p>
+        </div>
+        <div class="footer-section">
+          <h5>Services</h5>
+          <a href="#"><i class="fas fa-desktop"></i> Computer Sales</a>
+          <a href="#"><i class="fas fa-tools"></i> Computer Repair</a>
+          <a href="#"><i class="fas fa-headset"></i> Technical Support</a>
+          <a href="#"><i class="fas fa-shipping-fast"></i> Fast Delivery</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-bottom-left">
+          <strong>© 2025 Tech Com</strong> — All Rights Reserved
+        </div>
+        <div class="footer-bottom-right">
+          <a href="#" onclick="showPrivacyPolicy(); return false;"
+            >Privacy Policy</a
+          >
+          | <a href="#" onclick="showAboutUs(); return false;">About Us</a> |
+          <a href="/ECommerceBackEnd/">Admin Panel</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ========== MODALS ========== -->
+    <div
+      class="modal fade"
+      id="productDetailModal"
+      tabindex="-1"
+      aria-labelledby="productDetailModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="productDetailModalLabel">
+              Product Details
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="productDetailContent"></div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="invoiceModal"
+      tabindex="-1"
+      aria-labelledby="invoiceModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="invoiceModalLabel">Invoice Preview</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalInvoiceContent"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button
+              class="btn btn-primary btn-sm"
+              onclick="printInvoiceFromModal()"
+            >
+              <i class="fas fa-print me-1"></i>Print
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About Us Modal -->
+    <div
+      class="modal fade"
+      id="aboutUsModal"
+      tabindex="-1"
+      aria-labelledby="aboutUsModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="aboutUsModalLabel">
+              <i class="fas fa-info-circle me-2"></i>About Us
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <h4 class="mb-3" style="color: var(--brand)">
+              Welcome to Tech Com
+            </h4>
+            <p class="mb-3">
+              <strong>Tech Com</strong> is a leading provider of professional
+              computer services and repair solutions in Cambodia. We specialize
+              in offering high-quality computer products, expert technical
+              support, and reliable repair services to both individuals and
+              businesses.
+            </p>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">Our Mission</h5>
+            <p class="mb-3">
+              To provide exceptional computer products and services that empower
+              our customers to achieve their goals. We are committed to
+              delivering quality, reliability, and outstanding customer service.
+            </p>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">What We Offer</h5>
+            <ul class="mb-3">
+              <li>
+                <strong>Computer Sales:</strong> Latest laptops, desktops, and
+                computer accessories
+              </li>
+              <li>
+                <strong>Repair Services:</strong> Expert diagnosis and repair
+                for all computer issues
+              </li>
+              <li>
+                <strong>Technical Support:</strong> Professional assistance for
+                all your tech needs
+              </li>
+              <li>
+                <strong>Fast Delivery:</strong> Quick and reliable shipping
+                across Cambodia
+              </li>
+            </ul>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">
+              Why Choose Us?
+            </h5>
+            <ul class="mb-3">
+              <li>✅ Quality products from trusted brands</li>
+              <li>✅ Experienced and certified technicians</li>
+              <li>✅ Competitive pricing</li>
+              <li>✅ Excellent customer service</li>
+              <li>✅ Fast and reliable delivery</li>
+            </ul>
+
+            <div
+              class="mt-4 p-3"
+              style="background: rgba(99, 102, 241, 0.1); border-radius: 8px"
+            >
+              <p class="mb-0">
+                <i class="fas fa-map-marker-alt me-2"></i
+                ><strong>Location:</strong> Phnom Penh, Cambodia<br />
+                <i class="fas fa-phone me-2"></i><strong>Phone:</strong> (855)
+                123-4567<br />
+                <i class="fas fa-envelope me-2"></i
+                ><strong>Email:</strong> info@techcom.com<br />
+                <i class="fas fa-clock me-2"></i><strong>Hours:</strong> Monday
+                - Saturday, 8:00 AM - 6:00 PM
+              </p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div
+      class="modal fade"
+      id="privacyPolicyModal"
+      tabindex="-1"
+      aria-labelledby="privacyPolicyModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="privacyPolicyModalLabel">
+              <i class="fas fa-shield-alt me-2"></i>Privacy Policy
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted mb-4">
+              <small>Last Updated: January 2025</small>
+            </p>
+
+            <h5 class="mt-3 mb-3" style="color: var(--brand)">
+              1. Information We Collect
+            </h5>
+            <p class="mb-3">
+              We collect information that you provide directly to us, including:
+            </p>
+            <ul class="mb-3">
+              <li>
+                Name and contact information (phone number, email address)
+              </li>
+              <li>Order information and purchase history</li>
+              <li>
+                Payment information (processed securely through our payment
+                partners)
+              </li>
+              <li>Any other information you choose to provide</li>
+            </ul>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">
+              2. How We Use Your Information
+            </h5>
+            <p class="mb-3">We use the information we collect to:</p>
+            <ul class="mb-3">
+              <li>Process and fulfill your orders</li>
+              <li>Communicate with you about your orders and our services</li>
+              <li>Improve our website and customer experience</li>
+              <li>Send you promotional materials (with your consent)</li>
+              <li>Comply with legal obligations</li>
+            </ul>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">
+              3. Information Sharing
+            </h5>
+            <p class="mb-3">
+              We do not sell, trade, or rent your personal information to third
+              parties. We may share your information only:
+            </p>
+            <ul class="mb-3">
+              <li>
+                With service providers who assist us in operating our website
+                and conducting our business
+              </li>
+              <li>When required by law or to protect our rights</li>
+              <li>With your consent</li>
+            </ul>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">
+              4. Data Security
+            </h5>
+            <p class="mb-3">
+              We implement appropriate security measures to protect your
+              personal information. However, no method of transmission over the
+              Internet is 100% secure, and we cannot guarantee absolute
+              security.
+            </p>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">
+              5. Your Rights
+            </h5>
+            <p class="mb-3">You have the right to:</p>
+            <ul class="mb-3">
+              <li>Access your personal information</li>
+              <li>Correct inaccurate information</li>
+              <li>Request deletion of your information</li>
+              <li>Opt-out of marketing communications</li>
+            </ul>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">6. Cookies</h5>
+            <p class="mb-3">
+              We use cookies to enhance your browsing experience, analyze site
+              traffic, and personalize content. You can control cookies through
+              your browser settings.
+            </p>
+
+            <h5 class="mt-4 mb-3" style="color: var(--brand)">7. Contact Us</h5>
+            <p class="mb-3">
+              If you have questions about this Privacy Policy, please contact
+              us:
+            </p>
+            <p class="mb-0">
+              <strong>Tech Com</strong><br />
+              Email: info@techcom.com<br />
+              Phone: (855) 123-4567<br />
+              Address: Phnom Penh, Cambodia
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Message Modal -->
+    <div
+      class="modal fade"
+      id="successModal"
+      tabindex="-1"
+      aria-labelledby="successModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div
+          class="modal-content"
+          style="
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+          "
+        >
+          <div class="modal-body text-center p-4">
+            <div style="font-size: 4rem; margin-bottom: 1rem">✅</div>
+            <h4 class="mb-3" style="color: white; font-weight: 600">
+              Order Placed Successfully!
+            </h4>
+            <p class="mb-3" style="color: rgba(255, 255, 255, 0.9)">
+              Thank you for your order. Your invoice has been generated and you
+              can view it below.
+            </p>
+            <p
+              class="mb-4"
+              style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem"
+            >
+              We will process your order and contact you soon.
+            </p>
+            <button
+              class="btn btn-light btn-sm"
+              data-bs-dismiss="modal"
+              onclick="document.getElementById('successModal').classList.remove('show');"
+            >
+              Continue Shopping
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ================= CSRF =================
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      const csrftoken = getCookie("csrftoken");
+
+      // ================= GLOBALS =================
+      let allProducts = [];
+      let cart = [];
+
+      const MENU_API = "/menus/";
+      const MENU_DETAIL_API = "/menudetails/";
+      const BANNER_API = "/banners/";
+      const IMAGE_API = "/images/";
+      const CATEGORY_API = "/categories/";
+      const PRODUCT_API = "/products/";
+      const PRODUCT_DETAIL_API = "/productdetails/";
+      const QRCODE_API = "/qrcodes/";
+      const ORDER_API = "/orders/";
+
+      // ================= HEADER MENU + MENU DETAIL =================
+      function loadMenus() {
+        fetch(MENU_API)
+          .then((res) => res.json())
+          .then((menus) => {
+            const nav = document.getElementById("menuNav");
+            nav.innerHTML = "";
+            // Filter out "About Us" from API menus to avoid duplicates
+            const filteredMenus = menus.filter((menu) => {
+              const menuName = (menu.MenuNameEN || "").toLowerCase();
+              return (
+                !menuName.includes("about us") && !menuName.includes("about")
+              );
+            });
+            filteredMenus.forEach((menu) => {
+              const safeName = (menu.MenuNameEN || "").replace(/'/g, "\\'");
+              const li = document.createElement("li");
+              li.className = "nav-item";
+              li.innerHTML = `
+            <a class="nav-link text-white-50 pointer"
+               href="#"
+               onclick="loadMenuDetail(${menu.id}, '${safeName}')">
+              ${menu.MenuNameEN}
+            </a>`;
+              nav.appendChild(li);
+            });
+            // Add About Us to navbar (new version)
+            const aboutLi = document.createElement("li");
+            aboutLi.className = "nav-item";
+            aboutLi.innerHTML = `
+            <a class="nav-link text-white-50 pointer"
+               href="#"
+               onclick="showAboutUs(); return false;">
+              About Us
+            </a>`;
+            nav.appendChild(aboutLi);
+          })
+          .catch((err) => console.error("Menu load error:", err));
+      }
+
+      function loadMenuDetail(menuId, menuName) {
+        fetch(MENU_DETAIL_API)
+          .then((res) => res.json())
+          .then((details) => {
+            const filtered = details.filter((d) => d.MenuID === menuId);
+            const div = document.getElementById("menuDetailPreview");
+            if (!filtered.length) {
+              div.innerHTML = `<span class="text-muted">No detail for <b>${menuName}</b>.</span>`;
+              return;
+            }
+            div.innerHTML = `<h6>${menuName}</h6>`;
+            filtered.forEach((d) => {
+              div.innerHTML += `
+            <div class="border rounded mb-1 p-1 small" style="background: transparent; color: white;">
+              ${d.Description}
+              <div class="text-muted" style="font-size:.7rem;">${
+                d.MenuDetailDate || ""
+              }</div>
+            </div>`;
+            });
+          })
+          .catch((err) => console.error("MenuDetail load error:", err));
+      }
+
+      // ================= BANNER CAROUSEL =================
+      function loadBanners() {
+        fetch(BANNER_API)
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.length) {
+              // If no banners, use product images as fallback
+              return fetch(PRODUCT_API)
+                .then((r) => r.json())
+                .then((products) => {
+                  return products.slice(0, 3).map((p) => ({
+                    BannerImage:
+                      p.productImage ||
+                      "https://via.placeholder.com/1200x400/172488/ffffff?text=Featured+Promotion",
+                    BannerName: p.productName || "Promotion",
+                  }));
+                });
+            }
+            return data;
+          })
+          .then((banners) => {
+            const indicators = document.getElementById("bannerIndicators");
+            const inner = document.getElementById("bannerInner");
+            indicators.innerHTML = "";
+            inner.innerHTML = "";
+
+            if (!banners.length) {
+              // Show placeholder if still no data
+              inner.innerHTML = `
+            <div class="carousel-item active">
+              <img src="https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product" 
+                   class="promo-product-image" alt="Featured Promotion">
+              <div class="promo-overlay">
+                <div class="promo-header">
+                  <div class="promo-left">
+                    <h1 class="promo-title">ELECTRONIC DEALS</h1>
+                    <div class="promo-discount">
+                      <div class="promo-discount-label">DISCOUNT</div>
+                      <div class="promo-discount-value">20%</div>
+                    </div>
+                  </div>
+                  <div class="promo-right">
+                    <div class="promo-order-now">ORDER NOW</div>
+                    <div class="promo-qr">
+                      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=http://127.0.0.1:8000/" 
+                           alt="QR Code">
+                    </div>
+                  </div>
+                </div>
+                <div class="promo-footer">
+                  <div class="promo-website">www.techcom.com</div>
+                </div>
+              </div>
+            </div>`;
+              return;
+            }
+
+            banners.forEach((b, idx) => {
+              const img =
+                b.BannerImage ||
+                b.ImageURL ||
+                "https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product";
+              const bannerName = b.BannerName || "ELECTRONIC DEALS";
+              const discount = "20"; // You can make this dynamic from banner data
+
+              if (idx < 3) {
+                indicators.innerHTML += `
+              <button type="button" data-bs-target="#bannerCarousel" data-bs-slide-to="${idx}"
+                ${
+                  idx === 0 ? 'class="active" aria-current="true"' : ""
+                } aria-label="Banner ${idx + 1}"></button>`;
+              }
+              inner.innerHTML += `
+            <div class="carousel-item ${idx === 0 ? "active" : ""}">
+              <img src="${img}" class="promo-product-image" 
+                   alt="${bannerName}"
+                   onerror="this.src='https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product'">
+              <div class="promo-overlay">
+                <div class="promo-header">
+                  <div class="promo-left">
+                    <h1 class="promo-title">${bannerName}</h1>
+                    <div class="promo-discount">
+                      <div class="promo-discount-label">DISCOUNT</div>
+                      <div class="promo-discount-value">${discount}%</div>
+                    </div>
+                  </div>
+                  <div class="promo-right">
+                    <div class="promo-order-now">ORDER NOW</div>
+                    <div class="promo-qr">
+                      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=http://127.0.0.1:8000/" 
+                           alt="QR Code" 
+                           onerror="this.style.display='none'">
+                    </div>
+                  </div>
+                </div>
+                <div class="promo-footer">
+                  <div class="promo-website">www.techcom.com</div>
+                </div>
+              </div>
+            </div>`;
+            });
+          })
+          .catch((err) => {
+            console.error("Banner load error:", err);
+            document.getElementById("bannerInner").innerHTML = `
+            <div class="carousel-item active">
+              <img src="https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product" 
+                   class="promo-product-image" alt="Featured Promotion">
+              <div class="promo-overlay">
+                <div class="promo-header">
+                  <div class="promo-left">
+                    <h1 class="promo-title">ELECTRONIC DEALS</h1>
+                    <div class="promo-discount">
+                      <div class="promo-discount-label">DISCOUNT</div>
+                      <div class="promo-discount-value">20%</div>
+                    </div>
+                  </div>
+                  <div class="promo-right">
+                    <div class="promo-order-now">ORDER NOW</div>
+                    <div class="promo-qr">
+                      <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=http://127.0.0.1:8000/" 
+                           alt="QR Code">
+                    </div>
+                  </div>
+                </div>
+                <div class="promo-footer">
+                  <div class="promo-website">www.techcom.com</div>
+                </div>
+              </div>
+            </div>`;
+          });
+      }
+
+      // ================= SECOND SLIDESHOW (Slider) =================
+      // Change to ImageTypeID you want for slider (right now 2)
+      const SLIDE_IMAGETYPE_ID = 2;
+
+      function loadSlidesWithImages(images) {
+        const filtered = images.filter(
+          (img) => img.ImageTypeID === SLIDE_IMAGETYPE_ID
+        );
+        const indicators = document.getElementById("slideIndicators");
+        const inner = document.getElementById("slideInner");
+        indicators.innerHTML = "";
+        inner.innerHTML = "";
+
+        if (!filtered.length) {
+          // If no slider images, use latest products as fallback
+          fetch(PRODUCT_API)
+            .then((res) => res.json())
+            .then((products) => {
+              const latestProducts = products.slice(0, 5); // Get latest 5 products
+              if (latestProducts.length === 0) {
+                inner.innerHTML = `
+              <div class="carousel-item active">
+                <img src="https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product" 
+                     class="product-slide-image" alt="Latest Product">
+                <div class="product-slide-content">
+                  <div class="product-slide-header">
+                    <h1 class="product-slide-title">LATEST PRODUCTS</h1>
+                  </div>
+                </div>
+              </div>`;
+                return;
+              }
+
+              // Build HTML strings first to prevent duplication
+              let indicatorsHTML = "";
+              let itemsHTML = "";
+
+              latestProducts.forEach((product, idx) => {
+                const img =
+                  product.productImage ||
+                  "https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product";
+                const productName = product.productName || "Latest Product";
+                const price = parseFloat(product.price || 0).toFixed(2);
+
+                if (idx < 5) {
+                  indicatorsHTML += `
+                <button type="button" data-bs-target="#slideCarousel" data-bs-slide-to="${idx}"
+                  ${
+                    idx === 0 ? 'class="active" aria-current="true"' : ""
+                  } aria-label="Slide ${idx + 1}"></button>`;
+                }
+                itemsHTML += `
+              <div class="carousel-item ${idx === 0 ? "active" : ""}">
+                <img src="${img}" class="product-slide-image"
+                     alt="${productName}"
+                     onerror="this.src='https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product'">
+                <div class="product-slide-content">
+                  <div class="product-slide-header">
+                    <h1 class="product-slide-title">LATEST PRODUCTS</h1>
+                  </div>
+                </div>
+              </div>`;
+              });
+
+              // Set all at once to prevent duplication
+              indicators.innerHTML = indicatorsHTML;
+              inner.innerHTML = itemsHTML;
+            })
+            .catch((err) => {
+              console.error("Error loading products for slider:", err);
+              inner.innerHTML = `
+              <div class="carousel-item active">
+                <img src="https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product" 
+                     class="product-slide-image" alt="Latest Product">
+                <div class="product-slide-content">
+                  <div class="product-slide-header">
+                    <h1 class="product-slide-title">LATEST PRODUCTS</h1>
+                  </div>
+                </div>
+              </div>`;
+            });
+          return;
+        }
+
+        // Build HTML strings first to prevent duplication
+        let indicatorsHTML = "";
+        let itemsHTML = "";
+
+        filtered.forEach((img, idx) => {
+          indicatorsHTML += `
+        <button type="button" data-bs-target="#slideCarousel" data-bs-slide-to="${idx}"
+          ${
+            idx === 0 ? 'class="active" aria-current="true"' : ""
+          } aria-label="Slide ${idx + 1}"></button>`;
+
+          itemsHTML += `
+        <div class="carousel-item ${idx === 0 ? "active" : ""}">
+          <img src="${img.ImageURL}" class="product-slide-image"
+               alt="${img.ImageName || "Latest Product"}"
+               onerror="this.src='https://via.placeholder.com/400x400/ffffff/0f4c75?text=Product'">
+          <div class="product-slide-content">
+            <div class="product-slide-header">
+              <h1 class="product-slide-title">LATEST PRODUCTS</h1>
+            </div>
+            <div class="product-slide-info">
+              <div class="product-slide-name">${
+                img.ImageName || "Featured Product"
+              }</div>
+              <div class="product-slide-price">${img.ImageLink || "NEW"}</div>
+            </div>
+          </div>
+        </div>`;
+        });
+
+        // Set all at once to prevent duplication
+        indicators.innerHTML = indicatorsHTML;
+        inner.innerHTML = itemsHTML;
+      }
+
+      // ================= CATEGORY & PRODUCT =================
+      function loadCategories() {
+        fetch(CATEGORY_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const list = document.getElementById("categoryList");
+            list.innerHTML = "";
+            data.forEach((cat) => {
+              list.innerHTML += `
+            <button class="btn btn-sm btn-outline-dark category-btn"
+            style="color: white;"
+                    onclick="loadProducts(${cat.id})">
+              ${cat.categoryName}
+            </button>`;
+            });
+          });
+      }
+
+      function loadProducts(categoryId) {
+        let url = PRODUCT_API;
+        if (categoryId) url += `?categoryID=${categoryId}`;
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            allProducts = data;
+            applyProductFilter();
+          });
+      }
+
+      function applyProductFilter() {
+        const name = document.getElementById("searchName").value.toLowerCase();
+        const minPrice = parseFloat(
+          document.getElementById("minPrice").value || 0
+        );
+        const maxPrice = parseFloat(
+          document.getElementById("maxPrice").value || 0
+        );
+
+        const filtered = allProducts.filter((p) => {
+          const price = parseFloat(p.price || 0);
+          const matchName = p.productName.toLowerCase().includes(name);
+          const matchMin = !minPrice || price >= minPrice;
+          const matchMax = !maxPrice || price <= maxPrice;
+          return matchName && matchMin && matchMax;
+        });
+
+        renderProducts(filtered);
+      }
+
+      function renderProducts(products) {
+        const container = document.getElementById("productList");
+        const countText = document.getElementById("productCountText");
+        container.innerHTML = "";
+        countText.textContent = products.length
+          ? `${products.length} product(s) found`
+          : "No products found";
+
+        products.forEach((p) => {
+          // Handle product image URL
+          let imgSrc = p.productImage || "";
+          if (imgSrc && !imgSrc.startsWith("http") && !imgSrc.startsWith("/")) {
+            imgSrc = "/" + imgSrc;
+          }
+          if (!imgSrc || imgSrc === "null" || imgSrc === "") {
+            imgSrc =
+              "https://via.placeholder.com/400x300/172488/ffffff?text=No+Image";
+          }
+
+          const price = parseFloat(p.price || 0);
+          const availability = p.availability || "In Stock";
+          const availabilityClass = availability.toLowerCase().includes("stock")
+            ? "success"
+            : "warning";
+          container.innerHTML += `
+        <div class="col-md-3 mb-4">
+          <div class="card product-card h-100 shadow-sm" onclick="loadProductDetail(${
+            p.id
+          })" style="cursor: pointer;">
+            <div class="position-relative">
+              <img src="${imgSrc}" class="card-img-top" style="height:220px;object-fit:cover;background:#f5f5f5;" 
+                   onerror="this.src='https://via.placeholder.com/400x300/172488/ffffff?text=Tech+Com';this.onerror=null;" 
+                   alt="${p.productName || "Product"}">
+              ${
+                p.availability
+                  ? `<span class="badge bg-${availabilityClass} position-absolute top-0 end-0 m-2">${availability}</span>`
+                  : ""
+              }
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h6 class="mb-2 fw-bold" style="color:var(--brand);min-height:2.5rem;">${
+                p.productName
+              }</h6>
+              <div class="mb-2">
+                <span class="h5 text-danger fw-bold">$${price.toFixed(2)}</span>
+              </div>
+              ${
+                p.weight
+                  ? `<div class="small text-muted mb-2"><i class="fas fa-weight me-1"></i>${p.weight}</div>`
+                  : ""
+              }
+              ${
+                p.shipping
+                  ? `<div class="small text-muted mb-2"><i class="fas fa-shipping-fast me-1"></i>${p.shipping}</div>`
+                  : ""
+              }
+              <div class="mt-auto d-flex gap-2 mt-3" onclick="event.stopPropagation();">
+                <button class="btn btn-sm btn-outline-primary flex-fill"
+                        onclick="loadProductDetail(${p.id})">
+                  <i class="fas fa-info-circle me-1"></i>Details
+                </button>
+                <button class="btn btn-sm btn-primary flex-fill"
+                        onclick="addToCart('${p.productName.replace(
+                          /'/g,
+                          "\\'"
+                        )}', ${price})">
+                  <i class="fas fa-cart-plus me-1"></i>Add
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+        });
+      }
+
+      function loadProductDetail(productId) {
+        const modal = new bootstrap.Modal(
+          document.getElementById("productDetailModal"),
+          {
+            backdrop: "static",
+            keyboard: true,
+          }
+        );
+        const title = document.getElementById("productDetailModalLabel");
+        const body = document.getElementById("productDetailContent");
+        title.textContent = "Loading...";
+        body.innerHTML = '<p class="text-muted">Please wait...</p>';
+
+        // First, get the product information
+        const product = allProducts.find((p) => p.id === productId);
+
+        // Then fetch product details
+        fetch(`${PRODUCT_DETAIL_API}?productID=${productId}`)
+          .then((res) => res.json())
+          .then((data) => {
+            let html = "";
+
+            // Show product basic information first
+            if (product) {
+              let imgSrc = product.productImage || "";
+              if (
+                imgSrc &&
+                !imgSrc.startsWith("http") &&
+                !imgSrc.startsWith("/")
+              ) {
+                imgSrc = "/" + imgSrc;
+              }
+              if (!imgSrc || imgSrc === "null" || imgSrc === "") {
+                imgSrc =
+                  "https://via.placeholder.com/400x300/172488/ffffff?text=Tech+Com";
+              }
+
+              const price = parseFloat(product.price || 0);
+
+              html += `
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <img src="${imgSrc}" class="img-fluid rounded" alt="${
+                product.productName || "Product"
+              }" 
+                       onerror="this.src='https://via.placeholder.com/400x300/172488/ffffff?text=Tech+Com';this.onerror=null;">
+                </div>
+                <div class="col-md-8">
+                  <h4 style="color: var(--brand);">${
+                    product.productName || "Product"
+                  }</h4>
+                  <h3 class="text-danger mb-3">$${price.toFixed(2)}</h3>
+                  ${
+                    product.weight
+                      ? `<p><i class="fas fa-weight me-2"></i><strong>Weight:</strong> ${product.weight}</p>`
+                      : ""
+                  }
+                  ${
+                    product.shipping
+                      ? `<p><i class="fas fa-shipping-fast me-2"></i><strong>Shipping:</strong> ${product.shipping}</p>`
+                      : ""
+                  }
+                  ${
+                    product.availability
+                      ? `<p><span class="badge bg-success">${product.availability}</span></p>`
+                      : ""
+                  }
+                  ${
+                    product.productDescript
+                      ? `<div class="mt-3"><strong>Description:</strong><div class="mt-2">${product.productDescript}</div></div>`
+                      : ""
+                  }
+                </div>
+              </div>`;
+            }
+
+            // Show detailed product information if available
+            if (data.length > 0) {
+              html += `<hr style="border-color: var(--border-light);">`;
+              html += `<h5 class="mb-3" style="color: var(--brand);">Detailed Information</h5>`;
+              data.forEach((d) => {
+                html += `
+                <div class="border rounded mb-3 p-3" style="background: rgba(99, 102, 241, 0.1); border-color: var(--border-light) !important;">
+                  ${
+                    d.productDetailName
+                      ? `<h6 class="mb-2" style="color: var(--brand-light);">${d.productDetailName}</h6>`
+                      : ""
+                  }
+                  ${
+                    d.Description
+                      ? `<div class="mb-2"><strong>Description:</strong><div class="mt-1">${d.Description}</div></div>`
+                      : ""
+                  }
+                  ${
+                    d.Information
+                      ? `<div class="mb-2"><strong>Information:</strong><div class="mt-1">${d.Information}</div></div>`
+                      : ""
+                  }
+                  ${
+                    d.Reviews
+                      ? `<div class="mb-2"><strong>Reviews:</strong><div class="mt-1">${d.Reviews}</div></div>`
+                      : ""
+                  }
+                </div>`;
+              });
+            } else if (product) {
+              // No additional message needed - basic product info is already shown above
+            }
+
+            if (product) {
+              title.textContent = product.productName || "Product Details";
+              body.innerHTML = html;
+            } else {
+              title.textContent = "Product Not Found";
+              body.innerHTML =
+                '<div class="alert alert-warning">Product information could not be loaded.</div>';
+            }
+
+            modal.show();
+          })
+          .catch((err) => {
+            console.error("Product detail error:", err);
+            // Show product info even if detail fetch fails
+            if (product) {
+              let imgSrc = product.productImage || "";
+              if (
+                imgSrc &&
+                !imgSrc.startsWith("http") &&
+                !imgSrc.startsWith("/")
+              ) {
+                imgSrc = "/" + imgSrc;
+              }
+              if (!imgSrc || imgSrc === "null" || imgSrc === "") {
+                imgSrc =
+                  "https://via.placeholder.com/400x300/172488/ffffff?text=Tech+Com";
+              }
+              const price = parseFloat(product.price || 0);
+              title.textContent = product.productName || "Product Details";
+              body.innerHTML = `
+                <div class="row">
+                  <div class="col-md-4">
+                    <img src="${imgSrc}" class="img-fluid rounded" alt="${
+                product.productName || "Product"
+              }">
+                  </div>
+                  <div class="col-md-8">
+                    <h4 style="color: var(--brand);">${
+                      product.productName || "Product"
+                    }</h4>
+                    <h3 class="text-danger mb-3">$${price.toFixed(2)}</h3>
+                    ${
+                      product.weight
+                        ? `<p><i class="fas fa-weight me-2"></i><strong>Weight:</strong> ${product.weight}</p>`
+                        : ""
+                    }
+                    ${
+                      product.shipping
+                        ? `<p><i class="fas fa-shipping-fast me-2"></i><strong>Shipping:</strong> ${product.shipping}</p>`
+                        : ""
+                    }
+                    ${
+                      product.productDescript
+                        ? `<div class="mt-3"><strong>Description:</strong><div class="mt-2">${product.productDescript}</div></div>`
+                        : ""
+                    }
+                    <div class="alert alert-warning mt-3">Unable to load additional details at this time.</div>
+                  </div>
+                </div>`;
+            } else {
+              title.textContent = "Error";
+              body.innerHTML =
+                '<div class="alert alert-danger">Failed to load product details.</div>';
+            }
+            modal.show();
+          });
+      }
+
+      // ================= CART =================
+      function addToCart(name, price) {
+        const existing = cart.find((i) => i.name === name);
+        if (existing) existing.qty++;
+        else cart.push({ name, price: Number(price), qty: 1 });
+        renderCart();
+      }
+
+      function renderCart() {
+        const tbody = document.getElementById("cartBody");
+        const count = document.getElementById("cartCount");
+        let total = 0;
+        let itemsCount = 0;
+        tbody.innerHTML = "";
+        cart.forEach((i, index) => {
+          const sub = i.qty * Number(i.price);
+          total += sub;
+          itemsCount += i.qty;
+          tbody.innerHTML += `
+        <tr style="background: transparent !important;">
+          <td style="background: transparent !important; color: white;">${
+            i.name
+          }</td>
+          <td style="background: transparent !important; color: white;">${
+            i.qty
+          }</td>
+          <td style="background: transparent !important; color: white;">$${Number(
+            i.price
+          ).toFixed(2)}</td>
+          <td style="background: transparent !important; color: white;">$${sub.toFixed(
+            2
+          )}</td>
+          <td style="background: transparent !important;"><button class="btn btn-sm btn-outline-danger" onclick="removeCartItem(${index})">x</button></td>
+        </tr>`;
+        });
+        document.getElementById("cartTotal").textContent = `$${total.toFixed(
+          2
+        )}`;
+        count.textContent = itemsCount;
+      }
+
+      function removeCartItem(index) {
+        cart.splice(index, 1);
+        renderCart();
+      }
+
+      // ================= QR CODES =================
+      const qrSelect = document.getElementById("qrSelect");
+      const qrImageContainer = document.getElementById("qrImageContainer");
+      const qrUpload = document.getElementById("qrUpload");
+
+      function loadQRCodes() {
+        fetch(QRCODE_API)
+          .then((res) => res.json())
+          .then((data) => {
+            data.forEach((qr) => {
+              qrSelect.innerHTML += `<option value="${qr.id}" data-img="${qr.qrImage}">${qr.qrName}</option>`;
+            });
+          });
+      }
+
+      qrSelect.addEventListener("change", function () {
+        const img = this.selectedOptions[0].getAttribute("data-img");
+        qrImageContainer.innerHTML = img
+          ? `<img src="${img}" width="120" class="img-thumbnail">`
+          : "";
+      });
+
+      qrUpload.addEventListener("change", function () {
+        if (this.files && this.files[0]) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            qrImageContainer.innerHTML = `<img src="${e.target.result}" width="120" class="img-thumbnail">`;
+          };
+          reader.readAsDataURL(qrUpload.files[0]);
+        } else {
+          qrImageContainer.innerHTML = "";
+        }
+      });
+
+      // ================= CHECKOUT / ORDER =================
+      function checkout() {
+        const name = document.getElementById("customerName").value.trim();
+        const phone = document.getElementById("customerPhone").value.trim();
+        const total = cart.reduce((sum, i) => sum + i.qty * Number(i.price), 0);
+
+        if (!name || !phone || !cart.length) {
+          alert("Please fill customer information and add items to cart.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("customerName", name);
+        formData.append("customerPhone", phone);
+        formData.append("totalAmount", total);
+
+        // QR Code is optional - only add if provided
+        if (qrUpload.files.length > 0) {
+          formData.append("QRCodeInvoice", qrUpload.files[0]);
+        } else if (qrSelect.value && !qrSelect.selectedOptions[0].disabled) {
+          // If QR code is selected from dropdown, we need to fetch the image
+          const selectedQR =
+            qrSelect.selectedOptions[0].getAttribute("data-img");
+          if (selectedQR) {
+            // Note: For existing QR codes, you might need to handle this differently
+            // For now, we'll make QR code optional
+          }
+        }
+        // QR Code is now optional - order can proceed without it
+
+        formData.append(
+          "items",
+          JSON.stringify(
+            cart.map((i) => ({
+              productName: i.name,
+              price: Number(i.price),
+              qty: i.qty,
+            }))
+          )
+        );
+
+        fetch(ORDER_API, {
+          method: "POST",
+          headers: { "X-CSRFToken": csrftoken },
+          body: formData,
+        })
+          .then((res) => {
+            if (!res.ok) throw new Error(res.status);
+            return res.json();
+          })
+          .then((order) => {
+            // Show success modal
+            const successModal = new bootstrap.Modal(
+              document.getElementById("successModal")
+            );
+            successModal.show();
+            renderInvoice(order);
+            cart = [];
+            renderCart();
+            document.getElementById("customerName").value = "";
+            document.getElementById("customerPhone").value = "";
+            qrUpload.value = "";
+            qrSelect.selectedIndex = 0;
+            qrImageContainer.innerHTML = "";
+            loadOrderHistory();
+            // Auto-close success modal after 3 seconds
+            setTimeout(() => {
+              successModal.hide();
+            }, 3000);
+          })
+          .catch((err) => alert("Error placing order: " + err));
+      }
+
+      function renderInvoice(order) {
+        const section = document.getElementById("invoiceSection");
+        const content = document.getElementById("invoiceContent");
+        section.classList.remove("d-none");
+
+        const totalAmount = Number(order.totalAmount || 0);
+        let html = `
+      <div class="small">
+        <b>Invoice #${order.id}</b><br>
+        Date: ${new Date(order.orderDate).toLocaleString()}<br>
+        Customer: ${order.customerName} (${order.customerPhone})<br>
+        Total: $${totalAmount.toFixed(2)}
+      </div>`;
+
+        if (order.QRCodeInvoice) {
+          html += `<div class="mt-2"><b>Payment QR:</b><br><img src="${order.QRCodeInvoice}" width="120" class="img-thumbnail"></div>`;
+        }
+
+        html += `
+      <div class="table-responsive mt-2">
+        <table class="table table-sm table-bordered mb-0" style="background: transparent !important;">
+          <thead style="background: transparent !important;">
+            <tr><th style="background: transparent !important; color: white;">Product</th><th style="background: transparent !important; color: white;">Qty</th><th style="background: transparent !important; color: white;">Price</th><th style="background: transparent !important; color: white;">Subtotal</th></tr>
+          </thead><tbody style="background: transparent !important;">`;
+
+        order.items.forEach((i) => {
+          const price = Number(i.price);
+          const qty = Number(i.qty);
+          const sub = price * qty;
+          html += `<tr style="background: transparent !important;">
+        <td style="background: transparent !important; color: white;">${
+          i.productName
+        }</td>
+        <td style="background: transparent !important; color: white;">${qty}</td>
+        <td style="background: transparent !important; color: white;">$${price.toFixed(
+          2
+        )}</td>
+        <td style="background: transparent !important; color: white;">$${sub.toFixed(
+          2
+        )}</td>
+      </tr>`;
+        });
+        html += "</tbody></table></div>";
+
+        content.innerHTML = html;
+      }
+
+      function generateInvoiceHTML(order) {
+        const totalAmount = Number(order.totalAmount || 0);
+        let html = `<div class="container my-4">
+      <h3>🧾 Invoice #${order.id}</h3>
+      <p><b>Name:</b> ${order.customerName}<br>
+         <b>Phone:</b> ${order.customerPhone}<br>
+         <b>Date:</b> ${new Date(order.orderDate).toLocaleString()}<br>
+         <b>Total:</b> $${totalAmount.toFixed(2)}</p>`;
+
+        if (order.QRCodeInvoice) {
+          html += `<p><b>Payment QR:</b><br><img src="${order.QRCodeInvoice}" width="120"></p>`;
+        }
+
+        html += `<table class="table table-bordered" style="background: transparent !important;">
+      <thead style="background: transparent !important;"><tr><th style="background: transparent !important; color: white;">Product</th><th style="background: transparent !important; color: white;">Qty</th><th style="background: transparent !important; color: white;">Price</th><th style="background: transparent !important; color: white;">Subtotal</th></tr></thead><tbody style="background: transparent !important;">`;
+        order.items.forEach((i) => {
+          const price = Number(i.price);
+          const qty = Number(i.qty);
+          const sub = price * qty;
+          html += `<tr style="background: transparent !important;">
+        <td style="background: transparent !important; color: white;">${
+          i.productName
+        }</td>
+        <td style="background: transparent !important; color: white;">${qty}</td>
+        <td style="background: transparent !important; color: white;">$${price.toFixed(
+          2
+        )}</td>
+        <td style="background: transparent !important; color: white;">$${sub.toFixed(
+          2
+        )}</td>
+      </tr>`;
+        });
+        html += `</tbody></table></div>`;
+        return html;
+      }
+
+      function showInvoiceModal(orderId) {
+        fetch(`${ORDER_API}${orderId}/`)
+          .then((res) => res.json())
+          .then((order) => {
+            const html = generateInvoiceHTML(order);
+            document.getElementById("modalInvoiceContent").innerHTML = html;
+            const modal = new bootstrap.Modal(
+              document.getElementById("invoiceModal")
+            );
+            modal.show();
+          });
+      }
+
+      function printInvoiceFromModal() {
+        const content = document.getElementById(
+          "modalInvoiceContent"
+        ).innerHTML;
+        const w = window.open("", "", "width=800,height=600");
+        w.document.write(`
+      <html><head>
+        <title>Invoice</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+      </head><body>${content}</body></html>`);
+        w.document.close();
+        w.focus();
+        setTimeout(() => w.print(), 500);
+      }
+
+      // ================= ORDER HISTORY & REPORT =================
+      // ================= ORDER HISTORY & REPORT =================
+      function loadOrderHistory() {
+        fetch(ORDER_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const list = document.getElementById("orderHistory");
+            const topTotalOrders = document.getElementById("topTotalOrders");
+            list.innerHTML = "";
+            data.forEach((o) => {
+              const totalItems = o.items.reduce(
+                (sum, i) => sum + Number(i.qty),
+                0
+              );
+              list.innerHTML += `
+          <li class="list-group-item">
+            <div class="fw-semibold">${
+              o.customerName
+            } <span class="text-muted">(${o.customerPhone})</span></div>
+            <div class="small text-muted">
+              🕒 ${new Date(o.orderDate).toLocaleString()}
+              | 💲 ${Number(o.totalAmount || 0).toFixed(2)}
+              | 📦 ${totalItems} item(s)
+            </div>
+            <div class="small">
+              📝 ${o.items.map((i) => `${i.productName} (${i.qty})`).join(", ")}
+            </div>
+            <button class="btn btn-sm btn-outline-primary mt-1" onclick="showInvoiceModal(${
+              o.id
+            })">
+              View Invoice
+            </button>
+          </li>`;
+            });
+            topTotalOrders.textContent = data.length;
+            renderOrderReport(data);
+          })
+          .catch((err) => console.error("Order history load error:", err));
+      }
+
+      function renderOrderReport(orders) {
+        const div = document.getElementById("orderReport");
+        if (!orders.length) {
+          div.innerHTML = '<span class="text-muted">No orders yet.</span>';
+          return;
+        }
+        const totalOrders = orders.length;
+        const totalAmount = orders.reduce(
+          (sum, o) => sum + Number(o.totalAmount || 0),
+          0
+        );
+        const latest = orders[orders.length - 1];
+
+        const customerTotals = {};
+        orders.forEach((o) => {
+          const key = o.customerName || "Unknown";
+          customerTotals[key] =
+            (customerTotals[key] || 0) + Number(o.totalAmount || 0);
+        });
+        const topCustomer = Object.entries(customerTotals).sort(
+          (a, b) => b[1] - a[1]
+        )[0];
+
+        let html = `
+      <div><b>Total Orders:</b> ${totalOrders}</div>
+      <div><b>Total Sales:</b> $${totalAmount.toFixed(2)}</div>
+      <div><b>Last Order:</b> #${latest.id} (${new Date(
+          latest.orderDate
+        ).toLocaleString()})</div>`;
+        if (topCustomer) {
+          html += `<div><b>Top Customer:</b> ${
+            topCustomer[0]
+          } ($${topCustomer[1].toFixed(2)})</div>`;
+        }
+        div.innerHTML = html;
+      }
+
+      // ================= LAYOUT IMAGES: Logo, Sidebars, Footer =================
+      function loadLayoutImages() {
+        fetch(IMAGE_API)
+          .then((res) => res.json())
+          .then((images) => {
+            // Logo (6) - Filter for active logos only
+            const logoList = images.filter(
+              (img) =>
+                img.ImageTypeID === 6 &&
+                (img.Active === "Y" ||
+                  img.Active === "Yes" ||
+                  img.Active === true)
+            );
+            const logoImg = document.getElementById("logoImg");
+            const logoBadge = document.getElementById("logoBadge");
+
+            if (logoList.length > 0 && logoList[0].ImageURL) {
+              const logoUrl = logoList[0].ImageURL;
+
+              // Set logo image source (URL is already formatted by serializer)
+              logoImg.src = logoUrl;
+              logoImg.alt = logoList[0].ImageName || "Logo";
+
+              // Handle image load success
+              logoImg.onload = function () {
+                // Logo loaded successfully - show image, hide badge
+                logoImg.classList.remove("d-none");
+                logoBadge.classList.add("d-none");
+              };
+
+              // Handle image load errors
+              logoImg.onerror = function () {
+                console.error("Logo image failed to load:", logoUrl);
+                // Fallback: hide logo image and show badge
+                logoImg.classList.add("d-none");
+                logoBadge.classList.remove("d-none");
+              };
+
+              // Try to load the image (triggers onload/onerror)
+              // If image is already cached, manually trigger check
+              if (logoImg.complete) {
+                if (logoImg.naturalWidth > 0) {
+                  logoImg.onload();
+                } else {
+                  logoImg.onerror();
+                }
+              }
+            } else {
+              // No active logo found, show default badge
+              logoImg.classList.add("d-none");
+              logoBadge.classList.remove("d-none");
+            }
+
+            // Sidebar Left (3)
+            const leftList = images.filter((img) => img.ImageTypeID === 3);
+            const leftDiv = document.getElementById("sidebarLeftImages");
+            leftDiv.innerHTML = "";
+            leftList.forEach((img) => {
+              const link = img.ImageLink || "#";
+              leftDiv.innerHTML += `
+            <div class="sidebar-image">
+              <a href="${link}" target="_blank">
+                <img src="${img.ImageURL}" alt="${img.ImageName}">
+              </a>
+            </div>`;
+            });
+
+            // Sidebar Right (4)
+            const rightList = images.filter((img) => img.ImageTypeID === 4);
+            const rightDiv = document.getElementById("sidebarRightImages");
+            rightDiv.innerHTML = "";
+            rightList.forEach((img) => {
+              const link = img.ImageLink || "#";
+              rightDiv.innerHTML += `
+            <div class="sidebar-image">
+              <a href="${link}" target="_blank">
+                <img src="${img.ImageURL}" alt="${img.ImageName}">
+              </a>
+            </div>`;
+            });
+
+            // Footer (5)
+            const footerList = images.filter((img) => img.ImageTypeID === 5);
+            const footerDiv = document.getElementById("footerImages");
+            footerDiv.innerHTML = "";
+            footerList.forEach((img) => {
+              const link = img.ImageLink || "#";
+              footerDiv.innerHTML += `
+            <a href="${link}" target="_blank" title="${img.ImageName}">
+              <img src="${img.ImageURL}" width="100%" alt="${img.ImageName}">
+            </a>`;
+            });
+
+            // Slider from same images (ImageTypeID = SLIDE_IMAGETYPE_ID)
+            loadSlidesWithImages(images);
+          })
+          .catch((err) => console.error("Layout image load error:", err));
+      }
+
+      // ================= PAGE NAVIGATION =================
+      function showHomePage() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      function showAboutUs() {
+        const modal = new bootstrap.Modal(
+          document.getElementById("aboutUsModal")
+        );
+        modal.show();
+      }
+
+      function showPrivacyPolicy() {
+        const modal = new bootstrap.Modal(
+          document.getElementById("privacyPolicyModal")
+        );
+        modal.show();
+      }
+
+      // ================= INIT =================
+      loadMenus();
+      loadBanners();
+      loadLayoutImages(); // Logo + Sidebar Left + Sidebar Right + Footer + Slider
+      loadCategories();
+      loadProducts(); // all products
+      loadQRCodes();
+      loadOrderHistory();
+      renderCart();
+    </script>
+  </body>
+</html>

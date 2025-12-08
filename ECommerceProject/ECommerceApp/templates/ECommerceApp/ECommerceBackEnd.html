@@ -1,0 +1,3185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tech Com Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <style>
+      :root {
+        --sbw: 280px;
+        --ink: #ffffff;
+        --muted: #a0aec0;
+        --border: rgba(255, 255, 255, 0.1);
+        --bg: #1a1f3a;
+        --card: #252b4a;
+        --pri: #6366f1;
+        --pri-light: #818cf8;
+        --pri-dark: #4f46e5;
+        --purple: #8b5cf6;
+        --purple-light: #a78bfa;
+        --blue: #3b82f6;
+        --blue-light: #60a5fa;
+        --pink: #ec4899;
+        --pink-light: #f472b6;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #1a1f3a 0%, #2d1b4e 100%);
+        font-family: system-ui, -apple-system, "Khmer OS Siemreap", Segoe UI,
+          Roboto, sans-serif;
+        color: var(--ink);
+        min-height: 100vh;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: var(--sbw) minmax(0, 1fr);
+        min-height: 100vh;
+      }
+      .sidebar {
+        background: linear-gradient(180deg, #2d1b4e 0%, #1a1f3a 100%);
+        color: #e5e7eb;
+        padding: 1.5rem 1rem;
+        position: sticky;
+        top: 0;
+        align-self: start;
+        height: 100vh;
+        overflow-y: auto;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+      }
+      .sidebar-brand {
+        font-size: 1.25rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+      }
+      .sidebar-brand span.logo {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        color: var(--pri);
+        font-weight: 700;
+      }
+      .sidebar-nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .sidebar-nav li {
+        margin-bottom: 4px;
+      }
+      .sidebar-nav button {
+        width: 100%;
+        border: none;
+        background: transparent;
+        color: #cbd5f5;
+        text-align: left;
+        padding: 0.45rem 0.75rem;
+        border-radius: 0.65rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+      }
+      .sidebar-nav button span.icon {
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85rem;
+        background: rgba(148, 163, 184, 0.25);
+      }
+      .sidebar-nav button.active {
+        background: linear-gradient(
+          90deg,
+          rgba(99, 102, 241, 0.3) 0%,
+          rgba(139, 92, 246, 0.2) 100%
+        );
+        color: white;
+        border-left: 3px solid var(--pri-light);
+        position: relative;
+      }
+      .sidebar-nav button.active::after {
+        content: "→";
+        position: absolute;
+        right: 0.75rem;
+        font-weight: bold;
+      }
+      .sidebar-nav button.active span.icon {
+        background: rgba(15, 23, 42, 0.35);
+      }
+      .sidebar-section-title {
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #9ca3af;
+        padding: 0.6rem 0.75rem 0.3rem;
+      }
+
+      .topbar {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border);
+        background: rgba(37, 43, 74, 0.8);
+        backdrop-filter: blur(10px);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
+      .topbar-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+      .topbar-sub {
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      .main {
+        padding: 1rem 1.25rem 2rem;
+      }
+      .card-soft {
+        background: var(--card);
+        border-radius: 1rem;
+        border: 1px solid var(--border);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .card-soft-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.6rem;
+      }
+      .card-soft-header h5 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: white;
+      }
+      .card-soft {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .card-soft p,
+      .card-soft div:not(.stat-card):not(.metric-card):not(.chart-container) {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .badge-pill {
+        border-radius: 999px;
+        padding: 0.18rem 0.55rem;
+        font-size: 0.7rem;
+      }
+      .stat-card {
+        border-radius: 1rem;
+        padding: 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--purple) 0%,
+          var(--purple-light) 100%
+        );
+        color: white;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+      .stat-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -20%;
+        width: 150px;
+        height: 150px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+      }
+      .stat-card.blue {
+        background: linear-gradient(
+          135deg,
+          var(--blue) 0%,
+          var(--blue-light) 100%
+        );
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+      }
+      .stat-card.pink {
+        background: linear-gradient(
+          135deg,
+          var(--pink) 0%,
+          var(--pink-light) 100%
+        );
+        box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
+      }
+      .stat-card.green {
+        background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+      }
+      .stat-label {
+        font-size: 0.75rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+      }
+      .stat-value {
+        font-size: 2rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+      }
+      .stat-sub {
+        font-size: 0.7rem;
+        opacity: 0.8;
+        margin-top: 0.3rem;
+        position: relative;
+        z-index: 1;
+      }
+      .metric-card {
+        background: var(--card);
+        border-radius: 1rem;
+        padding: 1.25rem;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .metric-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        background: linear-gradient(135deg, var(--pri) 0%, var(--purple) 100%);
+      }
+      .metric-content {
+        flex: 1;
+      }
+      .metric-label {
+        font-size: 0.75rem;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .metric-value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: white;
+        margin-top: 0.25rem;
+      }
+      .chart-container {
+        position: relative;
+        height: 300px;
+        margin-top: 1rem;
+      }
+      .chart-container-large {
+        height: 400px;
+      }
+
+      .section-pane {
+        display: none;
+      }
+      .section-pane.active {
+        display: block;
+      }
+
+      .table-sm td,
+      .table-sm th {
+        padding: 0.35rem 0.5rem;
+      }
+      .table {
+        color: white;
+        background: transparent !important;
+      }
+      .table thead th {
+        background: transparent !important;
+        color: white;
+        border-color: var(--border);
+      }
+      .table tbody td {
+        border-color: var(--border);
+        color: rgba(255, 255, 255, 0.8);
+        background: transparent !important;
+      }
+      .table tbody tr {
+        background: transparent !important;
+      }
+      .table tbody tr:hover {
+        background: rgba(99, 102, 241, 0.1) !important;
+      }
+      .table-responsive {
+        background: transparent !important;
+      }
+      .form-control,
+      .form-select {
+        background: rgba(37, 43, 74, 0.5);
+        border-color: var(--border);
+        color: white;
+      }
+      .form-control:focus,
+      .form-select:focus {
+        background: rgba(37, 43, 74, 0.7);
+        border-color: var(--pri);
+        color: white;
+      }
+      .form-label {
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .text-muted {
+        color: rgba(255, 255, 255, 0.6) !important;
+      }
+      .badge {
+        color: white;
+      }
+      .badge.bg-primary-subtle,
+      .badge.bg-secondary-subtle,
+      .badge.bg-light {
+        background: rgba(99, 102, 241, 0.3) !important;
+        color: white !important;
+      }
+      .navbar-light,
+      .bg-light,
+      .bg-light-subtle {
+        background: var(--card) !important;
+        color: white !important;
+      }
+      .navbar-light .navbar-nav .nav-link {
+        color: rgba(255, 255, 255, 0.9) !important;
+      }
+      .navbar-light .navbar-nav .nav-link:hover {
+        color: white !important;
+      }
+
+      @media (max-width: 992px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        .sidebar {
+          position: relative;
+          height: auto;
+          display: flex;
+          flex-direction: row;
+          overflow-x: auto;
+          overflow-y: hidden;
+        }
+        .sidebar-brand {
+          border-bottom: none;
+          margin-bottom: 0;
+          margin-right: 1rem;
+        }
+        .sidebar-nav {
+          display: flex;
+          flex-wrap: nowrap;
+        }
+        .sidebar-nav li {
+          margin-right: 4px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <span class="logo">TC</span>
+          <div>
+            <div>Tech Com Admin</div>
+            <small style="font-size: 0.7rem; color: #9ca3af">E-Commerce</small>
+          </div>
+        </div>
+
+        <div class="sidebar-section-title">Dashboard</div>
+        <ul class="sidebar-nav">
+          <li>
+            <button class="active" data-section="overview">
+              <span class="icon">🏠</span> Dashboard Overview
+            </button>
+          </li>
+        </ul>
+
+        <div class="sidebar-section-title">Content</div>
+        <ul class="sidebar-nav">
+          <li>
+            <button data-section="banners">
+              <span class="icon">🖼️</span> Banners CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="images">
+              <span class="icon">🖼️</span> Images CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="menus">
+              <span class="icon">📂</span> Menus CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="menudetails">
+              <span class="icon">📑</span> Menu Details CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="imagetypes">
+              <span class="icon">🔖</span> ImageType CRUD
+            </button>
+          </li>
+        </ul>
+
+        <div class="sidebar-section-title">E-Commerce</div>
+        <ul class="sidebar-nav">
+          <li>
+            <button data-section="categories">
+              <span class="icon">🏷️</span> Category CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="products">
+              <span class="icon">🛒</span> Product CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="productdetails">
+              <span class="icon">📄</span> ProductDetail CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="productdetailimages">
+              <span class="icon">🖼️</span> ProductDetailImage CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="qrcodes">
+              <span class="icon">🏦</span> QRCode CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="orders">
+              <span class="icon">📦</span> Order CRUD
+            </button>
+          </li>
+          <li>
+            <button data-section="orderitems">
+              <span class="icon">📋</span> OrderItem CRUD
+            </button>
+          </li>
+        </ul>
+
+        <div class="sidebar-section-title">Preview</div>
+        <ul class="sidebar-nav">
+          <li>
+            <button data-section="carousel">
+              <span class="icon">🎞️</span> Carousel Preview
+            </button>
+          </li>
+          <li>
+            <button data-section="menu-preview">
+              <span class="icon">📋</span> Menu & Detail Preview
+            </button>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- ========== MAIN CONTENT ========== -->
+      <div>
+        <!-- Topbar -->
+        <div class="topbar">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <div class="topbar-title" style="color: white">
+                Admin Dashboard
+              </div>
+              <div class="topbar-sub" style="color: var(--muted)">
+                Manage All E-Commerce Data via Django REST API
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <main class="main">
+          <!-- ====== SECTION: OVERVIEW ====== -->
+          <section id="section-overview" class="section-pane active">
+            <!-- Top Row: Large Metric Cards -->
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <div class="stat-card blue">
+                  <div class="stat-label">Avg First Reply Time</div>
+                  <div class="stat-value" id="avgReplyTime">
+                    30 hours, 15 minutes
+                  </div>
+                  <div class="stat-sub">Last 30 days</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="stat-card pink">
+                  <div class="stat-label">Avg First Reply Time</div>
+                  <div class="stat-value" id="avgReplyTime2">
+                    22 hours, 44 minutes
+                  </div>
+                  <div class="stat-sub">Last 7 days</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Second Row: Small Metric Cards + Chart -->
+            <div class="row g-3 mb-3">
+              <div class="col-md-3">
+                <div class="metric-card">
+                  <div class="metric-icon">
+                    <i class="fas fa-envelope"></i>
+                  </div>
+                  <div class="metric-content">
+                    <div class="metric-label">Message</div>
+                    <div class="metric-value" id="statMessages">30%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="metric-card">
+                  <div class="metric-icon">
+                    <i class="fas fa-at"></i>
+                  </div>
+                  <div class="metric-content">
+                    <div class="metric-label">Email</div>
+                    <div class="metric-value" id="statEmail">30%</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card-soft">
+                  <div class="card-soft-header">
+                    <h5>First Reply and Full Resolve Time</h5>
+                  </div>
+                  <div class="chart-container">
+                    <canvas id="replyTimeChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Third Row: Main Line Chart -->
+            <div class="row g-3 mb-3">
+              <div class="col-12">
+                <div class="card-soft">
+                  <div class="card-soft-header">
+                    <h5>Orders & Revenue Trend</h5>
+                  </div>
+                  <div class="chart-container-large">
+                    <canvas id="trendChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom Row: Donut Charts and Bar Chart -->
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="card-soft">
+                  <div class="card-soft-header">
+                    <h5>Products By Category</h5>
+                  </div>
+                  <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card-soft">
+                  <div class="card-soft-header">
+                    <h5>New Orders vs Completed</h5>
+                  </div>
+                  <div class="chart-container">
+                    <canvas id="orderStatusChart"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="card-soft">
+                  <div class="card-soft-header">
+                    <h5>Orders / Week Day</h5>
+                  </div>
+                  <div class="chart-container">
+                    <canvas id="weeklyChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Additional Stats Row -->
+            <div class="row g-3 mt-3">
+              <div class="col-md-3">
+                <div class="stat-card">
+                  <div class="stat-label">Total Products</div>
+                  <div class="stat-value" id="statProducts">0</div>
+                  <div class="stat-sub">Active items</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="stat-card green">
+                  <div class="stat-label">Total Revenue</div>
+                  <div class="stat-value" id="statRevenue">$0</div>
+                  <div class="stat-sub">All time</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="stat-card blue">
+                  <div class="stat-label">Total Categories</div>
+                  <div class="stat-value" id="statCategories">0</div>
+                  <div class="stat-sub">Product groups</div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="stat-card pink">
+                  <div class="stat-label">Total Orders</div>
+                  <div class="stat-value" id="statOrders">0</div>
+                  <div class="stat-sub">Completed</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: BANNERS CRUD ====== -->
+          <section id="section-banners" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🖼️ Manage Banners</h5>
+                <span class="badge bg-primary-subtle text-primary badge-pill"
+                  >/banners/ API</span
+                >
+              </div>
+
+              <form id="bannerForm" class="row g-2 mb-3">
+                <input type="hidden" id="bannerId" />
+                <div class="col-md-4">
+                  <label class="form-label">Banner Name</label>
+                  <input
+                    type="text"
+                    id="bannerName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Banner Image</label>
+                  <input
+                    type="file"
+                    id="bannerImage"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button type="submit" class="btn btn-sm btn-primary me-2">
+                    💾 Save
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetBannerForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="90">Preview</th>
+                      <th>Name</th>
+                      <th width="180">Date</th>
+                      <th width="140">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="bannerTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: IMAGES CRUD ====== -->
+          <section id="section-images" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🖼️ Manage Images</h5>
+                <span class="badge bg-success-subtle text-success badge-pill"
+                  >/images/ API</span
+                >
+              </div>
+
+              <form id="imageForm" class="row g-2 mb-3">
+                <input type="hidden" id="imageId" />
+                <div class="col-md-3">
+                  <label class="form-label">Image Name</label>
+                  <input
+                    type="text"
+                    id="imageName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Image Link</label>
+                  <input
+                    type="text"
+                    id="imageLink"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Active Status</label>
+                  <input
+                    type="text"
+                    id="active"
+                    class="form-control form-control-sm"
+                    placeholder="Y/N"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Image Type</label>
+                  <select
+                    id="imageTypeID"
+                    class="form-select form-select-sm"
+                  ></select>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Image File</label>
+                  <input
+                    type="file"
+                    id="imageFile"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save Image
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetImageForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="90">Preview</th>
+                      <th>Name</th>
+                      <th>Link</th>
+                      <th width="80">Active</th>
+                      <th width="150">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="imageTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: MENUS CRUD ====== -->
+          <section id="section-menus" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>📂 Manage Menus</h5>
+                <span class="badge bg-info-subtle text-info badge-pill"
+                  >/menus/ API</span
+                >
+              </div>
+
+              <form id="menuForm" class="row g-2 mb-3">
+                <input type="hidden" id="menuId" />
+                <div class="col-md-4">
+                  <label class="form-label">Menu Name KH</label>
+                  <input
+                    type="text"
+                    id="menuNameKH"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Menu Name EN</label>
+                  <input
+                    type="text"
+                    id="menuNameEN"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Order By</label>
+                  <input
+                    type="number"
+                    id="orderBy"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button class="btn btn-sm btn-success me-2">
+                    💾 Save Menu
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetMenuForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th>Name KH</th>
+                      <th>Name EN</th>
+                      <th width="80">Order</th>
+                      <th width="140">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="menuTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: MENU DETAILS CRUD ====== -->
+          <section id="section-menudetails" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>📑 Manage Menu Details</h5>
+                <span class="badge bg-warning-subtle text-warning badge-pill"
+                  >/menudetails/ API</span
+                >
+              </div>
+
+              <form id="menuDetailForm" class="mb-3">
+                <input type="hidden" id="menuDetailId" />
+                <div class="mb-2">
+                  <label class="form-label">Menu</label>
+                  <select
+                    id="menuID"
+                    class="form-select form-select-sm"
+                    required
+                  ></select>
+                </div>
+                <div class="mb-2">
+                  <label class="form-label">Description (HTML Allowed)</label>
+                  <textarea
+                    id="description"
+                    rows="4"
+                    class="form-control form-control-sm"
+                    required
+                  ></textarea>
+                </div>
+                <button class="btn btn-sm btn-primary me-2">
+                  💾 Save Detail
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary"
+                  onclick="resetMenuDetailForm()"
+                >
+                  Reset
+                </button>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="100">Menu ID</th>
+                      <th>Description</th>
+                      <th width="180">Date</th>
+                      <th width="140">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="menuDetailTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: IMAGETYPE CRUD ====== -->
+          <section id="section-imagetypes" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🔖 Manage Image Types</h5>
+                <span
+                  class="badge bg-secondary-subtle text-secondary badge-pill"
+                  >/imagetypes/ API</span
+                >
+              </div>
+
+              <form id="imageTypeForm" class="row g-2 mb-3">
+                <input type="hidden" id="imageTypeId" />
+                <div class="col-md-4">
+                  <label class="form-label">Type Name</label>
+                  <input
+                    type="text"
+                    id="imageTypeName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Description</label>
+                  <input
+                    type="text"
+                    id="imageTypeDesc"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save Type
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetImageTypeForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="60">ID</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th width="140">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="imageTypeTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: CATEGORY CRUD ====== -->
+          <section id="section-categories" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🏷️ Manage Categories</h5>
+                <span class="badge bg-info-subtle text-info badge-pill"
+                  >/categories/ API</span
+                >
+              </div>
+
+              <form id="categoryForm" class="row g-2 mb-3">
+                <input type="hidden" id="categoryId" />
+                <div class="col-md-4">
+                  <label class="form-label">Category Name</label>
+                  <input
+                    type="text"
+                    id="categoryName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Category Image</label>
+                  <input
+                    type="file"
+                    id="categoryImage"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save Category
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetCategoryForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="80">Image</th>
+                      <th>Name</th>
+                      <th width="140">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="categoryTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: PRODUCT CRUD ====== -->
+          <section id="section-products" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🛒 Manage Products</h5>
+                <span class="badge bg-success-subtle text-success badge-pill"
+                  >/products/ API</span
+                >
+              </div>
+
+              <form id="productForm" class="row g-2 mb-3">
+                <input type="hidden" id="productId" />
+                <div class="col-md-3">
+                  <label class="form-label">Product Name</label>
+                  <input
+                    type="text"
+                    id="productName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Category</label>
+                  <select
+                    id="productCategory"
+                    class="form-select form-select-sm"
+                    required
+                  ></select>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Price</label>
+                  <input
+                    type="number"
+                    id="productPrice"
+                    class="form-control form-control-sm"
+                    step="0.01"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Weight</label>
+                  <input
+                    type="text"
+                    id="productWeight"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Availability</label>
+                  <input
+                    type="text"
+                    id="productAvailability"
+                    class="form-control form-control-sm"
+                    placeholder="In Stock"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Shipping</label>
+                  <input
+                    type="text"
+                    id="productShipping"
+                    class="form-control form-control-sm"
+                    placeholder="01 day shipping."
+                  />
+                </div>
+                <div class="col-md-5">
+                  <label class="form-label">Description (HTML)</label>
+                  <textarea
+                    id="productDescript"
+                    rows="2"
+                    class="form-control form-control-sm"
+                  ></textarea>
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Product Image</label>
+                  <input
+                    type="file"
+                    id="productImage"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save Product
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetProductForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="80">Image</th>
+                      <th>Name</th>
+                      <th width="120">Category</th>
+                      <th width="80">Price</th>
+                      <th width="120">Availability</th>
+                      <th width="160">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: PRODUCTDETAIL CRUD ====== -->
+          <section id="section-productdetails" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>📄 Manage Product Details</h5>
+                <span class="badge bg-warning-subtle text-warning badge-pill"
+                  >/productdetails/ API</span
+                >
+              </div>
+
+              <form id="productDetailForm" class="row g-2 mb-3">
+                <input type="hidden" id="productDetailId" />
+                <div class="col-md-4">
+                  <label class="form-label">Product</label>
+                  <select
+                    id="productDetailProduct"
+                    class="form-select form-select-sm"
+                    required
+                  ></select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Detail Name</label>
+                  <input
+                    type="text"
+                    id="productDetailName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Reviews</label>
+                  <input
+                    type="text"
+                    id="productDetailReviews"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Description</label>
+                  <textarea
+                    id="productDetailDescription"
+                    rows="2"
+                    class="form-control form-control-sm"
+                  ></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Information</label>
+                  <textarea
+                    id="productDetailInformation"
+                    rows="2"
+                    class="form-control form-control-sm"
+                  ></textarea>
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save Detail
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetProductDetailForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="70">ID</th>
+                      <th>Product</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th width="150">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productDetailTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: PRODUCTDETAILIMAGE CRUD ====== -->
+          <section id="section-productdetailimages" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🖼️ Manage Product Detail Images</h5>
+                <span class="badge bg-info-subtle text-info badge-pill"
+                  >/productdetailimages/ API</span
+                >
+              </div>
+
+              <form id="productDetailImageForm" class="row g-2 mb-3">
+                <input type="hidden" id="productDetailImageId" />
+                <div class="col-md-4">
+                  <label class="form-label">Product Detail</label>
+                  <select
+                    id="productDetailImageDetail"
+                    class="form-select form-select-sm"
+                    required
+                  ></select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">Image File</label>
+                  <input
+                    type="file"
+                    id="productDetailImageFile"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save Image
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetProductDetailImageForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="80">Image</th>
+                      <th width="90">Detail ID</th>
+                      <th>URL</th>
+                      <th width="150">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="productDetailImageTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: QRCode CRUD ====== -->
+          <section id="section-qrcodes" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🏦 Manage Bank QR Codes</h5>
+                <span class="badge bg-success-subtle text-success badge-pill"
+                  >/qrcodes/ API</span
+                >
+              </div>
+
+              <form id="qrForm" class="row g-2 mb-3">
+                <input type="hidden" id="qrId" />
+                <div class="col-md-4">
+                  <label class="form-label">QR Name</label>
+                  <input
+                    type="text"
+                    id="qrName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label">QR Image</label>
+                  <input
+                    type="file"
+                    id="qrImage"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save QR
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetQRForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle">
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="80">Image</th>
+                      <th>Name</th>
+                      <th width="150">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="qrTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: ORDER CRUD ====== -->
+          <section id="section-orders" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>📦 Manage Orders</h5>
+                <span class="badge bg-primary-subtle text-primary badge-pill"
+                  >/orders/ API</span
+                >
+              </div>
+
+              <!-- For simplicity: View + Delete + Update basic info -->
+              <form id="orderForm" class="row g-2 mb-3">
+                <input type="hidden" id="orderId" />
+                <div class="col-md-3">
+                  <label class="form-label">Customer Name</label>
+                  <input
+                    type="text"
+                    id="orderCustomerName"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Customer Phone</label>
+                  <input
+                    type="text"
+                    id="orderCustomerPhone"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Total Amount</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    id="orderTotalAmount"
+                    class="form-control form-control-sm"
+                  />
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Update Order
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetOrderForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table
+                  class="table table-sm table-bordered align-middle"
+                  style="background: transparent !important"
+                >
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="70">ID</th>
+                      <th>Customer</th>
+                      <th width="120">Phone</th>
+                      <th width="150">Date</th>
+                      <th width="90">Total</th>
+                      <th width="200">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orderTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: ORDERITEM CRUD ====== -->
+          <section id="section-orderitems" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>📋 Manage Order Items</h5>
+                <span
+                  class="badge bg-secondary-subtle text-secondary badge-pill"
+                  >/orderitems/ API</span
+                >
+              </div>
+
+              <form id="orderItemForm" class="row g-2 mb-3">
+                <input type="hidden" id="orderItemId" />
+                <div class="col-md-2">
+                  <label class="form-label">Order ID</label>
+                  <input
+                    type="number"
+                    id="orderItemOrderId"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-3">
+                  <label class="form-label">Product Name</label>
+                  <input
+                    type="text"
+                    id="orderItemProductName"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Qty</label>
+                  <input
+                    type="number"
+                    id="orderItemQty"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-2">
+                  <label class="form-label">Price</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    id="orderItemPrice"
+                    class="form-control form-control-sm"
+                    required
+                  />
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                  <button class="btn btn-sm btn-primary me-2">
+                    💾 Save Item
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-outline-secondary"
+                    onclick="resetOrderItemForm()"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table
+                  class="table table-sm table-bordered align-middle"
+                  style="background: transparent !important"
+                >
+                  <thead
+                    style="background: transparent !important; color: white"
+                  >
+                    <tr>
+                      <th width="60">ID</th>
+                      <th width="70">Order</th>
+                      <th>Product</th>
+                      <th width="60">Qty</th>
+                      <th width="80">Price</th>
+                      <th width="120">Subtotal</th>
+                      <th width="150">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="orderItemTable"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: CAROUSEL PREVIEW ====== -->
+          <section id="section-carousel" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>🎞️ Carousel Preview (by ImageType)</h5>
+                <span
+                  class="badge bg-secondary-subtle text-secondary badge-pill"
+                  >Front-end Demo</span
+                >
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-3">
+                  <label class="form-label">ImageType ID</label>
+                  <input
+                    type="number"
+                    id="carouselImageTypeID"
+                    class="form-control form-control-sm"
+                    value="2"
+                  />
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                  <button
+                    class="btn btn-sm btn-outline-primary"
+                    onclick="loadCarousel()"
+                  >
+                    Reload Carousel
+                  </button>
+                </div>
+              </div>
+
+              <div id="carouselWrapper">
+                <div
+                  id="carouselExampleIndicators"
+                  class="carousel slide"
+                  data-bs-ride="carousel"
+                >
+                  <div
+                    class="carousel-indicators"
+                    id="carouselIndicators"
+                  ></div>
+                  <div class="carousel-inner" id="carouselInner"></div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev"
+                  >
+                    <span class="carousel-control-prev-icon"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next"
+                  >
+                    <span class="carousel-control-next-icon"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ====== SECTION: MENU PREVIEW ====== -->
+          <section id="section-menu-preview" class="section-pane">
+            <div class="card-soft">
+              <div class="card-soft-header">
+                <h5>📋 Menu & Detail Preview (Front-end Navbar)</h5>
+                <span
+                  class="badge bg-secondary-subtle text-secondary badge-pill"
+                  >Like public site</span
+                >
+              </div>
+
+              <nav
+                class="navbar navbar-expand-lg navbar-dark rounded mb-3"
+                style="background: var(--card)"
+              >
+                <div class="container-fluid">
+                  <a class="navbar-brand" href="#">
+                    <span class="badge bg-success">LOGO</span>
+                  </a>
+                  <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#previewNavbar"
+                    aria-controls="previewNavbar"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                  >
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="previewNavbar">
+                    <ul
+                      class="navbar-nav me-auto mb-2 mb-lg-0"
+                      id="menuPreviewList"
+                    >
+                      <!-- loaded by js -->
+                    </ul>
+                    <form class="d-flex" role="search">
+                      <input
+                        class="form-control form-control-sm me-2"
+                        type="search"
+                        placeholder="Search"
+                      />
+                      <button
+                        class="btn btn-sm btn-outline-success"
+                        type="submit"
+                      >
+                        Search
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </nav>
+
+              <div id="menuDetailSection">
+                <h6>Menu Detail</h6>
+                <div
+                  id="menuDetailContent"
+                  class="border rounded p-3"
+                  style="background: var(--card); color: white"
+                >
+                  Click on a menu item to load details.
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      // ================= CSRF =================
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      const csrftoken = getCookie("csrftoken");
+
+      // ================= CONSTANT API URLs =================
+      const BANNER_API = "/banners/";
+      const IMAGE_API = "/images/";
+      const IMAGETYPE_API = "/imagetypes/";
+      const MENU_API = "/menus/";
+      const MENU_DETAIL_API = "/menudetails/";
+
+      const CATEGORY_API = "/categories/";
+      const PRODUCT_API = "/products/";
+      const PRODUCT_DETAIL_API = "/productdetails/";
+      const PRODUCT_DETAIL_IMAGE_API = "/productdetailimages/";
+      const QRCODE_API = "/qrcodes/";
+      const ORDER_API = "/orders/";
+      const ORDERITEM_API = "/orderitems/";
+
+      // ================= SIDEBAR NAVIGATION =================
+      document.querySelectorAll(".sidebar-nav button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document
+            .querySelectorAll(".sidebar-nav button")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+
+          const section = btn.getAttribute("data-section");
+          document
+            .querySelectorAll(".section-pane")
+            .forEach((p) => p.classList.remove("active"));
+          document.getElementById("section-" + section).classList.add("active");
+        });
+      });
+
+      // ================= CHART INSTANCES =================
+      let replyTimeChart,
+        trendChart,
+        categoryChart,
+        orderStatusChart,
+        weeklyChart;
+
+      // ================= OVERVIEW (STATS + CHARTS) =================
+      function loadOverview() {
+        Promise.all([
+          fetch(BANNER_API).then((r) => r.json()),
+          fetch(IMAGE_API).then((r) => r.json()),
+          fetch(MENU_API).then((r) => r.json()),
+          fetch(CATEGORY_API).then((r) => r.json()),
+          fetch(ORDER_API).then((r) => r.json()),
+          fetch(PRODUCT_API).then((r) => r.json()),
+        ]).then(([banners, images, menus, categories, orders, products]) => {
+          // Update stat cards
+          document.getElementById("statProducts").textContent = products.length;
+          document.getElementById("statCategories").textContent =
+            categories.length;
+          document.getElementById("statOrders").textContent = orders.length;
+
+          // Calculate revenue
+          const revenue = orders.reduce(
+            (sum, o) => sum + (parseFloat(o.totalAmount) || 0),
+            0
+          );
+          document.getElementById("statRevenue").textContent =
+            "$" + revenue.toFixed(2);
+
+          // Calculate percentages
+          const totalChannels = banners.length + images.length + menus.length;
+          const messagePct =
+            totalChannels > 0
+              ? Math.round((banners.length / totalChannels) * 100)
+              : 0;
+          const emailPct =
+            totalChannels > 0
+              ? Math.round((images.length / totalChannels) * 100)
+              : 0;
+          document.getElementById("statMessages").textContent =
+            messagePct + "%";
+          document.getElementById("statEmail").textContent = emailPct + "%";
+
+          // Calculate average reply times (mock data based on orders)
+          const avgTime1 =
+            orders.length > 0 ? Math.floor(orders.length * 1.2) : 30;
+          const avgTime2 =
+            orders.length > 0 ? Math.floor(orders.length * 0.8) : 22;
+          document.getElementById(
+            "avgReplyTime"
+          ).textContent = `${avgTime1} hours, 15 minutes`;
+          document.getElementById(
+            "avgReplyTime2"
+          ).textContent = `${avgTime2} hours, 44 minutes`;
+
+          // Initialize charts
+          initCharts(categories, orders, products);
+        });
+      }
+
+      function initCharts(categories, orders, products) {
+        // Reply Time Area Chart
+        const replyCtx = document.getElementById("replyTimeChart");
+        if (replyCtx) {
+          if (replyTimeChart) replyTimeChart.destroy();
+          replyTimeChart = new Chart(replyCtx, {
+            type: "line",
+            data: {
+              labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+              datasets: [
+                {
+                  label: "First Reply",
+                  data: [2.5, 3.2, 2.8, 3.5, 2.9, 3.1, 2.7],
+                  borderColor: "#8b5cf6",
+                  backgroundColor: "rgba(139, 92, 246, 0.2)",
+                  fill: true,
+                  tension: 0.4,
+                },
+                {
+                  label: "Full Resolve",
+                  data: [5.2, 6.1, 5.8, 6.5, 5.9, 6.2, 5.7],
+                  borderColor: "#3b82f6",
+                  backgroundColor: "rgba(59, 130, 246, 0.2)",
+                  fill: true,
+                  tension: 0.4,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { labels: { color: "#fff" } },
+              },
+              scales: {
+                x: {
+                  ticks: { color: "#a0aec0" },
+                  grid: { color: "rgba(255,255,255,0.1)" },
+                },
+                y: {
+                  ticks: { color: "#a0aec0" },
+                  grid: { color: "rgba(255,255,255,0.1)" },
+                },
+              },
+            },
+          });
+        }
+
+        // Trend Line Chart
+        const trendCtx = document.getElementById("trendChart");
+        if (trendCtx) {
+          if (trendChart) trendChart.destroy();
+          const orderData = Array.from({ length: 12 }, (_, i) => {
+            const monthOrders = orders.filter((o) => {
+              const date = new Date(o.orderDate || Date.now());
+              return date.getMonth() === i;
+            });
+            return monthOrders.length;
+          });
+          const revenueData = Array.from({ length: 12 }, (_, i) => {
+            const monthOrders = orders.filter((o) => {
+              const date = new Date(o.orderDate || Date.now());
+              return date.getMonth() === i;
+            });
+            return monthOrders.reduce(
+              (sum, o) => sum + (parseFloat(o.totalAmount) || 0),
+              0
+            );
+          });
+          trendChart = new Chart(trendCtx, {
+            type: "line",
+            data: {
+              labels: [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+              ],
+              datasets: [
+                {
+                  label: "Orders",
+                  data:
+                    orderData.length > 0
+                      ? orderData
+                      : [20, 35, 45, 30, 50, 40, 55, 60, 45, 50, 65, 70],
+                  borderColor: "#8b5cf6",
+                  backgroundColor: "rgba(139, 92, 246, 0.1)",
+                  tension: 0.4,
+                },
+                {
+                  label: "Revenue ($)",
+                  data:
+                    revenueData.length > 0
+                      ? revenueData
+                      : [
+                          500, 800, 1200, 900, 1500, 1100, 1800, 2000, 1600,
+                          1700, 2200, 2500,
+                        ],
+                  borderColor: "#3b82f6",
+                  backgroundColor: "rgba(59, 130, 246, 0.1)",
+                  tension: 0.4,
+                  yAxisID: "y1",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { labels: { color: "#fff" } },
+              },
+              scales: {
+                x: {
+                  ticks: { color: "#a0aec0" },
+                  grid: { color: "rgba(255,255,255,0.1)" },
+                },
+                y: {
+                  ticks: { color: "#a0aec0" },
+                  grid: { color: "rgba(255,255,255,0.1)" },
+                },
+                y1: {
+                  type: "linear",
+                  position: "right",
+                  ticks: { color: "#a0aec0" },
+                  grid: { drawOnChartArea: false },
+                },
+              },
+            },
+          });
+        }
+
+        // Category Donut Chart
+        const catCtx = document.getElementById("categoryChart");
+        if (catCtx) {
+          if (categoryChart) categoryChart.destroy();
+          const catCounts = {};
+          products.forEach((p) => {
+            const catName = p.categoryName || "Uncategorized";
+            catCounts[catName] = (catCounts[catName] || 0) + 1;
+          });
+          const colors = [
+            "#3b82f6",
+            "#8b5cf6",
+            "#ec4899",
+            "#10b981",
+            "#f59e0b",
+            "#ef4444",
+          ];
+          categoryChart = new Chart(catCtx, {
+            type: "doughnut",
+            data: {
+              labels: Object.keys(catCounts),
+              datasets: [
+                {
+                  data: Object.values(catCounts),
+                  backgroundColor: colors.slice(
+                    0,
+                    Object.keys(catCounts).length
+                  ),
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: "right", labels: { color: "#fff" } },
+              },
+            },
+          });
+        }
+
+        // Order Status Donut Chart
+        const orderStatusCtx = document.getElementById("orderStatusChart");
+        if (orderStatusCtx) {
+          if (orderStatusChart) orderStatusChart.destroy();
+          const newOrders = orders.length;
+          const completedOrders = Math.floor(orders.length * 0.8);
+          orderStatusChart = new Chart(orderStatusCtx, {
+            type: "doughnut",
+            data: {
+              labels: ["New", "Completed"],
+              datasets: [
+                {
+                  data: [newOrders, completedOrders],
+                  backgroundColor: ["#ec4899", "#8b5cf6"],
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { position: "right", labels: { color: "#fff" } },
+              },
+            },
+          });
+        }
+
+        // Weekly Bar Chart
+        const weeklyCtx = document.getElementById("weeklyChart");
+        if (weeklyCtx) {
+          if (weeklyChart) weeklyChart.destroy();
+          const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+          const weeklyData = days.map(
+            () => Math.floor(Math.random() * 30) + 10
+          );
+          weeklyChart = new Chart(weeklyCtx, {
+            type: "bar",
+            data: {
+              labels: days,
+              datasets: [
+                {
+                  label: "Orders",
+                  data: weeklyData,
+                  backgroundColor: "#3b82f6",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+              },
+              scales: {
+                x: {
+                  ticks: { color: "#a0aec0" },
+                  grid: { color: "rgba(255,255,255,0.1)" },
+                },
+                y: {
+                  ticks: { color: "#a0aec0" },
+                  grid: { color: "rgba(255,255,255,0.1)" },
+                },
+              },
+            },
+          });
+        }
+      }
+
+      // ================= BANNER CRUD =================
+      function fetchBanners() {
+        fetch(BANNER_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("bannerTable");
+            table.innerHTML = "";
+            data.forEach((banner) => {
+              table.innerHTML += `
+            <tr>
+              <td>${
+                banner.BannerImage
+                  ? `<img src="${banner.BannerImage}" width="80" class="rounded">`
+                  : ""
+              }</td>
+              <td>${banner.BannerName || ""}</td>
+              <td>${banner.BannerDate || ""}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1" onclick="editBanner(${
+                  banner.id
+                }, '${(banner.BannerName || "").replace(
+                /'/g,
+                "\\'"
+              )}')">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteBanner(${
+                  banner.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+            });
+          });
+      }
+
+      function resetBannerForm() {
+        document.getElementById("bannerForm").reset();
+        document.getElementById("bannerId").value = "";
+      }
+
+      document
+        .getElementById("bannerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("bannerId").value;
+          const name = document.getElementById("bannerName").value;
+          const image = document.getElementById("bannerImage").files[0];
+
+          const formData = new FormData();
+          formData.append("BannerName", name);
+          if (image) formData.append("BannerImage", image);
+
+          fetch(id ? `${BANNER_API}${id}/` : BANNER_API, {
+            method: id ? "PUT" : "POST",
+            headers: { "X-CSRFToken": csrftoken },
+            body: formData,
+          })
+            .then((res) => res.json())
+            .then(() => {
+              resetBannerForm();
+              fetchBanners();
+              loadOverview();
+            });
+        });
+
+      function editBanner(id, name) {
+        document.getElementById("bannerId").value = id;
+        document.getElementById("bannerName").value = name;
+      }
+
+      function deleteBanner(id) {
+        if (!confirm("Delete this banner?")) return;
+        fetch(`${BANNER_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(() => {
+          fetchBanners();
+          loadOverview();
+        });
+      }
+
+      // ================= IMAGE TYPE CRUD =================
+      function fetchImageTypesAdmin() {
+        fetch(IMAGETYPE_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const typeTable = document.getElementById("imageTypeTable");
+            const sel = document.getElementById("imageTypeID");
+            typeTable.innerHTML = "";
+            sel.innerHTML = "";
+            data.forEach((t) => {
+              typeTable.innerHTML += `
+            <tr>
+              <td>${t.id}</td>
+              <td>${t.ImageTypeName}</td>
+              <td>${t.Description || ""}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1"
+                        onclick="editImageType(${t.id}, '${(
+                t.ImageTypeName || ""
+              ).replace(/'/g, "\\'")}', '${(t.Description || "").replace(
+                /'/g,
+                "\\'"
+              )}')">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteImageType(${
+                  t.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+              sel.innerHTML += `<option value="${t.id}">${t.ImageTypeName}</option>`;
+            });
+          });
+      }
+
+      function resetImageTypeForm() {
+        document.getElementById("imageTypeForm").reset();
+        document.getElementById("imageTypeId").value = "";
+      }
+
+      document
+        .getElementById("imageTypeForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("imageTypeId").value;
+          const data = {
+            ImageTypeName: document.getElementById("imageTypeName").value,
+            Description: document.getElementById("imageTypeDesc").value,
+          };
+          fetch(id ? `${IMAGETYPE_API}${id}/` : IMAGETYPE_API, {
+            method: id ? "PUT" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify(data),
+          }).then(() => {
+            resetImageTypeForm();
+            fetchImageTypesAdmin();
+          });
+        });
+
+      function editImageType(id, name, desc) {
+        document.getElementById("imageTypeId").value = id;
+        document.getElementById("imageTypeName").value = name;
+        document.getElementById("imageTypeDesc").value = desc;
+      }
+
+      function deleteImageType(id) {
+        if (!confirm("Delete this ImageType?")) return;
+        fetch(`${IMAGETYPE_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(fetchImageTypesAdmin);
+      }
+
+      // ================= IMAGE CRUD =================
+      function fetchImages() {
+        fetch(IMAGE_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("imageTable");
+            table.innerHTML = "";
+            data.forEach((img) => {
+              table.innerHTML += `
+            <tr>
+              <td>${
+                img.ImageURL
+                  ? `<img src="${img.ImageURL}" width="80" class="rounded">`
+                  : ""
+              }</td>
+              <td>${img.ImageName}</td>
+              <td>${
+                img.ImageLink
+                  ? `<a href="${img.ImageLink}" target="_blank">Link</a>`
+                  : ""
+              }</td>
+              <td>${img.Active || ""}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1" onclick="editImage(${
+                  img.id
+                })">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteImage(${
+                  img.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+            });
+          });
+      }
+
+      function resetImageForm() {
+        document.getElementById("imageForm").reset();
+        document.getElementById("imageId").value = "";
+      }
+
+      document
+        .getElementById("imageForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("imageId").value;
+          const formData = new FormData();
+          formData.append(
+            "ImageName",
+            document.getElementById("imageName").value
+          );
+          formData.append(
+            "ImageLink",
+            document.getElementById("imageLink").value
+          );
+          formData.append("Active", document.getElementById("active").value);
+          formData.append(
+            "ImageTypeID",
+            document.getElementById("imageTypeID").value
+          );
+          const file = document.getElementById("imageFile").files[0];
+          if (file) formData.append("ImageURL", file);
+
+          fetch(id ? `${IMAGE_API}${id}/` : IMAGE_API, {
+            method: id ? "PUT" : "POST",
+            headers: { "X-CSRFToken": csrftoken },
+            body: formData,
+          }).then(() => {
+            resetImageForm();
+            fetchImages();
+            loadOverview();
+          });
+        });
+
+      function editImage(id) {
+        fetch(`${IMAGE_API}${id}/`)
+          .then((res) => res.json())
+          .then((img) => {
+            document.getElementById("imageId").value = img.id;
+            document.getElementById("imageName").value = img.ImageName;
+            document.getElementById("imageLink").value = img.ImageLink;
+            document.getElementById("active").value = img.Active;
+            document.getElementById("imageTypeID").value = img.ImageTypeID;
+          });
+      }
+
+      function deleteImage(id) {
+        if (!confirm("Delete this image?")) return;
+        fetch(`${IMAGE_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(() => {
+          fetchImages();
+          loadOverview();
+        });
+      }
+
+      // ================= MENU CRUD =================
+      function fetchMenus() {
+        fetch(MENU_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("menuTable");
+            const menuSelect = document.getElementById("menuID");
+            const previewMenuList = document.getElementById("menuPreviewList");
+
+            table.innerHTML = "";
+            menuSelect.innerHTML = "";
+            previewMenuList.innerHTML = "";
+
+            data.forEach((menu) => {
+              const safeKH = (menu.MenuNameKH || "").replace(/'/g, "\\'");
+              const safeEN = (menu.MenuNameEN || "").replace(/'/g, "\\'");
+
+              table.innerHTML += `
+            <tr>
+              <td>${menu.MenuNameKH}</td>
+              <td>${menu.MenuNameEN}</td>
+              <td>${menu.OrderBy || ""}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1" onclick="editMenu(${
+                  menu.id
+                }, '${safeKH}', '${safeEN}', ${
+                menu.OrderBy || 0
+              })">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteMenu(${
+                  menu.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+
+              menuSelect.innerHTML += `<option value="${menu.id}">${menu.MenuNameEN}</option>`;
+
+              previewMenuList.innerHTML += `
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="loadMenuDetailPreview(${menu.id}, '${safeEN}')">
+                ${menu.MenuNameEN}
+              </a>
+            </li>`;
+            });
+          });
+      }
+
+      function resetMenuForm() {
+        document.getElementById("menuForm").reset();
+        document.getElementById("menuId").value = "";
+      }
+
+      document
+        .getElementById("menuForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("menuId").value;
+          const data = {
+            MenuNameKH: document.getElementById("menuNameKH").value,
+            MenuNameEN: document.getElementById("menuNameEN").value,
+            OrderBy: document.getElementById("orderBy").value,
+          };
+
+          fetch(id ? `${MENU_API}${id}/` : MENU_API, {
+            method: id ? "PUT" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify(data),
+          }).then(() => {
+            resetMenuForm();
+            fetchMenus();
+            loadOverview();
+          });
+        });
+
+      function editMenu(id, kh, en, order) {
+        document.getElementById("menuId").value = id;
+        document.getElementById("menuNameKH").value = kh;
+        document.getElementById("menuNameEN").value = en;
+        document.getElementById("orderBy").value = order;
+      }
+
+      function deleteMenu(id) {
+        if (!confirm("Delete this menu?")) return;
+        fetch(`${MENU_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(() => {
+          fetchMenus();
+          loadOverview();
+        });
+      }
+
+      // ================= MENU DETAIL CRUD =================
+      function fetchMenuDetails() {
+        fetch(MENU_DETAIL_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("menuDetailTable");
+            table.innerHTML = "";
+            data.forEach((d) => {
+              const desc = d.Description || "";
+              const shortDesc =
+                desc.slice(0, 80) + (desc.length > 80 ? "..." : "");
+              const safeDesc = desc.replace(/`/g, "\\`");
+              table.innerHTML += `
+            <tr>
+              <td>${d.MenuID}</td>
+              <td>${shortDesc}</td>
+              <td>${d.MenuDetailDate || ""}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1"
+                  onclick="editMenuDetail(${d.id}, '${
+                d.MenuID
+              }', \`${safeDesc}\`)">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteMenuDetail(${
+                  d.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+            });
+          });
+      }
+
+      function resetMenuDetailForm() {
+        document.getElementById("menuDetailForm").reset();
+        document.getElementById("menuDetailId").value = "";
+      }
+
+      document
+        .getElementById("menuDetailForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("menuDetailId").value;
+          const data = {
+            MenuID: document.getElementById("menuID").value,
+            Description: document.getElementById("description").value,
+          };
+
+          fetch(id ? `${MENU_DETAIL_API}${id}/` : MENU_DETAIL_API, {
+            method: id ? "PUT" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify(data),
+          }).then(() => {
+            resetMenuDetailForm();
+            fetchMenuDetails();
+          });
+        });
+
+      function editMenuDetail(id, menuId, desc) {
+        document.getElementById("menuDetailId").value = id;
+        document.getElementById("menuID").value = menuId;
+        document.getElementById("description").value = desc;
+      }
+
+      function deleteMenuDetail(id) {
+        if (!confirm("Delete this Menu Detail?")) return;
+        fetch(`${MENU_DETAIL_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(fetchMenuDetails);
+      }
+
+      // ================= CAROUSEL PREVIEW =================
+      function loadCarousel() {
+        const typeId = parseInt(
+          document.getElementById("carouselImageTypeID").value || 0
+        );
+        fetch(IMAGE_API)
+          .then((res) => res.json())
+          .then((images) => {
+            const filtered = images.filter((img) => img.ImageTypeID === typeId);
+            const indicators = document.getElementById("carouselIndicators");
+            const inner = document.getElementById("carouselInner");
+
+            indicators.innerHTML = "";
+            inner.innerHTML = "";
+
+            if (filtered.length === 0) {
+              inner.innerHTML =
+                "<p class='p-3' style='color: rgba(255,255,255,0.7);'>No images found for this ImageType.</p>";
+              return;
+            }
+
+            filtered.forEach((img, index) => {
+              indicators.innerHTML += `
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}"
+              ${
+                index === 0 ? 'class="active" aria-current="true"' : ""
+              } aria-label="Slide ${index + 1}"></button>`;
+
+              inner.innerHTML += `
+            <div class="carousel-item ${index === 0 ? "active" : ""}">
+              <img src="${img.ImageURL}" class="d-block w-100" alt="${
+                img.ImageName
+              }" style="max-height: 420px; object-fit: cover;">
+              <div class="carousel-caption d-none d-md-block">
+                <h5>${img.ImageName}</h5>
+                <p>${img.ImageLink || ""}</p>
+              </div>
+            </div>`;
+            });
+          })
+          .catch((err) => {
+            console.error("Image load error:", err);
+            document.getElementById("carouselInner").innerHTML =
+              "<p class='text-danger p-3'>Error loading images.</p>";
+          });
+      }
+
+      // ================= MENU PREVIEW =================
+      function loadMenuDetailPreview(menuId, menuName) {
+        fetch(MENU_DETAIL_API)
+          .then((res) => res.json())
+          .then((details) => {
+            const filtered = details.filter((d) => d.MenuID === menuId);
+            const content = document.getElementById("menuDetailContent");
+
+            if (filtered.length === 0) {
+              content.innerHTML = `<p>No detail found for <strong>${menuName}</strong>.</p>`;
+              return;
+            }
+
+            content.innerHTML = `<h6>${menuName}</h6>`;
+            filtered.forEach((d) => {
+              content.innerHTML += `
+            <div class="card mb-2">
+              <div class="card-body p-2">
+                <div class="small">${d.Description}</div>
+                <small style="color: rgba(255,255,255,0.6);">${d.MenuDetailDate}</small>
+              </div>
+            </div>`;
+            });
+          });
+      }
+
+      // ================= CATEGORY CRUD =================
+      function fetchCategoriesAdmin() {
+        fetch(CATEGORY_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("categoryTable");
+            const select = document.getElementById("productCategory");
+            table.innerHTML = "";
+            select.innerHTML =
+              '<option value="">-- Select Category --</option>';
+            data.forEach((cat) => {
+              const safeName = (cat.categoryName || "").replace(/'/g, "\\'");
+              table.innerHTML += `
+            <tr>
+              <td>${
+                cat.categoryImage
+                  ? `<img src="${cat.categoryImage}" width="60" class="rounded">`
+                  : ""
+              }</td>
+              <td>${cat.categoryName}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1"
+                  onclick="editCategory(${cat.id}, '${safeName}')">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteCategory(${
+                  cat.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+              select.innerHTML += `<option value="${cat.id}">${cat.categoryName}</option>`;
+            });
+          });
+      }
+
+      function resetCategoryForm() {
+        document.getElementById("categoryForm").reset();
+        document.getElementById("categoryId").value = "";
+      }
+
+      document
+        .getElementById("categoryForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("categoryId").value;
+          const formData = new FormData();
+          formData.append(
+            "categoryName",
+            document.getElementById("categoryName").value
+          );
+          const img = document.getElementById("categoryImage").files[0];
+          if (img) formData.append("categoryImage", img);
+
+          fetch(id ? `${CATEGORY_API}${id}/` : CATEGORY_API, {
+            method: id ? "PUT" : "POST",
+            headers: { "X-CSRFToken": csrftoken },
+            body: formData,
+          }).then(() => {
+            resetCategoryForm();
+            fetchCategoriesAdmin();
+            loadOverview();
+          });
+        });
+
+      function editCategory(id, name) {
+        document.getElementById("categoryId").value = id;
+        document.getElementById("categoryName").value = name;
+      }
+
+      function deleteCategory(id) {
+        if (!confirm("Delete this Category?")) return;
+        fetch(`${CATEGORY_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(() => {
+          fetchCategoriesAdmin();
+          loadOverview();
+        });
+      }
+
+      // ================= PRODUCT CRUD =================
+      function fetchProductsAdmin() {
+        fetch(PRODUCT_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("productTable");
+            table.innerHTML = "";
+            data.forEach((p) => {
+              const safeName = (p.productName || "").replace(/'/g, "\\'");
+              table.innerHTML += `
+            <tr>
+              <td>${
+                p.productImage
+                  ? `<img src="${p.productImage}" width="60" class="rounded">`
+                  : ""
+              }</td>
+              <td>${p.productName}</td>
+              <td>${
+                p.categoryName ||
+                (p.categoryID && typeof p.categoryID === "object"
+                  ? p.categoryID.categoryName
+                  : "") ||
+                ""
+              }</td>
+              <td>$${p.price || "0.00"}</td>
+              <td>${p.availability || ""}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1"
+                  onclick="editProduct(${p.id}, '${safeName}', '${
+                (p.categoryID && typeof p.categoryID === "object"
+                  ? p.categoryID.id
+                  : p.categoryID) || ""
+              }', '${p.price || ""}', '${(p.weight || "").replace(
+                /'/g,
+                "\\'"
+              )}', '${(p.availability || "").replace(/'/g, "\\'")}', '${(
+                p.shipping || ""
+              ).replace(/'/g, "\\'")}', \`${(p.productDescript || "")
+                .replace(/`/g, "\\`")
+                .replace(/\$/g, "\\$")
+                .replace(/\\\\/g, "\\\\\\\\")
+                .replace(/\n/g, "\\n")
+                .replace(/\r/g, "\\r")}\`)">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteProduct(${
+                  p.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+            });
+          });
+      }
+
+      function resetProductForm() {
+        document.getElementById("productForm").reset();
+        document.getElementById("productId").value = "";
+      }
+
+      document
+        .getElementById("productForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("productId").value;
+          const formData = new FormData();
+          formData.append(
+            "productName",
+            document.getElementById("productName").value
+          );
+          const categoryId = document.getElementById("productCategory").value;
+          if (categoryId) {
+            formData.append("categoryID_id", categoryId);
+          }
+          formData.append(
+            "price",
+            document.getElementById("productPrice").value
+          );
+          formData.append(
+            "weight",
+            document.getElementById("productWeight").value
+          );
+          formData.append(
+            "availability",
+            document.getElementById("productAvailability").value
+          );
+          formData.append(
+            "shipping",
+            document.getElementById("productShipping").value
+          );
+          formData.append(
+            "productDescript",
+            document.getElementById("productDescript").value
+          );
+          const img = document.getElementById("productImage").files[0];
+          if (img) formData.append("productImage", img);
+
+          fetch(id ? `${PRODUCT_API}${id}/` : PRODUCT_API, {
+            method: id ? "PUT" : "POST",
+            headers: { "X-CSRFToken": csrftoken },
+            body: formData,
+          }).then(() => {
+            resetProductForm();
+            fetchProductsAdmin();
+          });
+        });
+
+      function editProduct(
+        id,
+        name,
+        categoryID,
+        price,
+        weight,
+        availability,
+        shipping,
+        descript
+      ) {
+        document.getElementById("productId").value = id;
+        document.getElementById("productName").value = name;
+        // Handle categoryID - it might be a number or object
+        const catId =
+          (categoryID && typeof categoryID === "object"
+            ? categoryID.id
+            : categoryID) || "";
+        document.getElementById("productCategory").value = catId;
+        document.getElementById("productPrice").value = price || "";
+        document.getElementById("productWeight").value = weight || "";
+        document.getElementById("productAvailability").value =
+          availability || "";
+        document.getElementById("productShipping").value = shipping || "";
+        document.getElementById("productDescript").value = descript || "";
+      }
+
+      function deleteProduct(id) {
+        if (!confirm("Delete this Product?")) return;
+        fetch(`${PRODUCT_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(fetchProductsAdmin);
+      }
+
+      // ================= PRODUCTDETAIL CRUD =================
+      function fetchProductDetailsAdmin() {
+        fetch(PRODUCT_DETAIL_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("productDetailTable");
+            const sel = document.getElementById("productDetailProduct");
+            table.innerHTML = "";
+            sel.innerHTML = '<option value="">-- Select Product --</option>';
+
+            // also fetch products to fill select if needed
+            fetch(PRODUCT_API)
+              .then((r) => r.json())
+              .then((products) => {
+                products.forEach((p) => {
+                  sel.innerHTML += `<option value="${p.id}">${p.productName}</option>`;
+                });
+
+                data.forEach((d) => {
+                  const prodName =
+                    products.find((p) => p.id === d.productID)?.productName ||
+                    d.productID;
+                  const desc = d.Description || "";
+                  const shortDesc =
+                    desc.slice(0, 60) + (desc.length > 60 ? "..." : "");
+                  table.innerHTML += `
+                <tr>
+                  <td>${d.id}</td>
+                  <td>${prodName}</td>
+                  <td>${d.productDetailName || ""}</td>
+                  <td>${shortDesc}</td>
+                  <td>
+                    <button class="btn btn-sm btn-warning me-1"
+                      onclick="editProductDetail(${d.id}, '${d.productID}', '${(
+                    d.productDetailName || ""
+                  ).replace(/'/g, "\\'")}', \`${(d.Description || "").replace(
+                    /`/g,
+                    "\\`"
+                  )}\`, \`${(d.Information || "").replace(/`/g, "\\`")}\`, '${(
+                    d.Reviews || ""
+                  ).replace(/'/g, "\\'")}')">Edit</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteProductDetail(${
+                      d.id
+                    })">Delete</button>
+                  </td>
+                </tr>`;
+                });
+              });
+          });
+      }
+
+      function resetProductDetailForm() {
+        document.getElementById("productDetailForm").reset();
+        document.getElementById("productDetailId").value = "";
+      }
+
+      document
+        .getElementById("productDetailForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("productDetailId").value;
+          const data = {
+            productID: document.getElementById("productDetailProduct").value,
+            productDetailName:
+              document.getElementById("productDetailName").value,
+            Description: document.getElementById("productDetailDescription")
+              .value,
+            Information: document.getElementById("productDetailInformation")
+              .value,
+            Reviews: document.getElementById("productDetailReviews").value,
+          };
+          fetch(id ? `${PRODUCT_DETAIL_API}${id}/` : PRODUCT_DETAIL_API, {
+            method: id ? "PUT" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify(data),
+          }).then(() => {
+            resetProductDetailForm();
+            fetchProductDetailsAdmin();
+          });
+        });
+
+      function editProductDetail(id, productID, name, desc, info, reviews) {
+        document.getElementById("productDetailId").value = id;
+        document.getElementById("productDetailProduct").value = productID;
+        document.getElementById("productDetailName").value = name;
+        document.getElementById("productDetailDescription").value = desc;
+        document.getElementById("productDetailInformation").value = info;
+        document.getElementById("productDetailReviews").value = reviews;
+      }
+
+      function deleteProductDetail(id) {
+        if (!confirm("Delete this ProductDetail?")) return;
+        fetch(`${PRODUCT_DETAIL_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(fetchProductDetailsAdmin);
+      }
+
+      // ================= PRODUCTDETAILIMAGE CRUD =================
+      function fetchProductDetailImagesAdmin() {
+        Promise.all([
+          fetch(PRODUCT_DETAIL_IMAGE_API).then((r) => r.json()),
+          fetch(PRODUCT_DETAIL_API).then((r) => r.json()),
+        ]).then(([images, details]) => {
+          const table = document.getElementById("productDetailImageTable");
+          const sel = document.getElementById("productDetailImageDetail");
+          table.innerHTML = "";
+          sel.innerHTML = '<option value="">-- Select Detail --</option>';
+          details.forEach((d) => {
+            sel.innerHTML += `<option value="${d.id}">${d.id} - ${d.productDetailName}</option>`;
+          });
+          images.forEach((img) => {
+            table.innerHTML += `
+          <tr>
+            <td>${
+              img.ImageURL
+                ? `<img src="${img.ImageURL}" width="70" class="rounded">`
+                : ""
+            }</td>
+            <td>${img.productDetailID}</td>
+            <td>${img.ImageURL || ""}</td>
+            <td>
+              <button class="btn btn-sm btn-warning me-1"
+                onclick="editProductDetailImage(${img.id}, '${
+              img.productDetailID
+            }')">Edit</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteProductDetailImage(${
+                img.id
+              })">Delete</button>
+            </td>
+          </tr>`;
+          });
+        });
+      }
+
+      function resetProductDetailImageForm() {
+        document.getElementById("productDetailImageForm").reset();
+        document.getElementById("productDetailImageId").value = "";
+      }
+
+      document
+        .getElementById("productDetailImageForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("productDetailImageId").value;
+          const formData = new FormData();
+          formData.append(
+            "productDetailID",
+            document.getElementById("productDetailImageDetail").value
+          );
+          const file = document.getElementById("productDetailImageFile")
+            .files[0];
+          if (file) formData.append("ImageURL", file);
+
+          fetch(
+            id ? `${PRODUCT_DETAIL_IMAGE_API}${id}/` : PRODUCT_DETAIL_IMAGE_API,
+            {
+              method: id ? "PUT" : "POST",
+              headers: { "X-CSRFToken": csrftoken },
+              body: formData,
+            }
+          ).then(() => {
+            resetProductDetailImageForm();
+            fetchProductDetailImagesAdmin();
+          });
+        });
+
+      function editProductDetailImage(id, detailID) {
+        document.getElementById("productDetailImageId").value = id;
+        document.getElementById("productDetailImageDetail").value = detailID;
+      }
+
+      function deleteProductDetailImage(id) {
+        if (!confirm("Delete this Detail Image?")) return;
+        fetch(`${PRODUCT_DETAIL_IMAGE_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(fetchProductDetailImagesAdmin);
+      }
+
+      // ================= QRCode CRUD =================
+      function fetchQRCodesAdmin() {
+        fetch(QRCODE_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("qrTable");
+            table.innerHTML = "";
+            data.forEach((qr) => {
+              const safeName = (qr.qrName || "").replace(/'/g, "\\'");
+              table.innerHTML += `
+            <tr>
+              <td>${
+                qr.qrImage
+                  ? `<img src="${qr.qrImage}" width="60" class="rounded">`
+                  : ""
+              }</td>
+              <td>${qr.qrName}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1"
+                  onclick="editQR(${qr.id}, '${safeName}')">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteQR(${
+                  qr.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+            });
+          });
+      }
+
+      function resetQRForm() {
+        document.getElementById("qrForm").reset();
+        document.getElementById("qrId").value = "";
+      }
+
+      document
+        .getElementById("qrForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("qrId").value;
+          const formData = new FormData();
+          formData.append("qrName", document.getElementById("qrName").value);
+          const img = document.getElementById("qrImage").files[0];
+          if (img) formData.append("qrImage", img);
+
+          fetch(id ? `${QRCODE_API}${id}/` : QRCODE_API, {
+            method: id ? "PUT" : "POST",
+            headers: { "X-CSRFToken": csrftoken },
+            body: formData,
+          }).then(() => {
+            resetQRForm();
+            fetchQRCodesAdmin();
+          });
+        });
+
+      function editQR(id, name) {
+        document.getElementById("qrId").value = id;
+        document.getElementById("qrName").value = name;
+      }
+
+      function deleteQR(id) {
+        if (!confirm("Delete this QR Code?")) return;
+        fetch(`${QRCODE_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(fetchQRCodesAdmin);
+      }
+
+      // ================= ORDER CRUD =================
+      function fetchOrdersAdmin() {
+        fetch(ORDER_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("orderTable");
+            table.innerHTML = "";
+            data.forEach((o) => {
+              table.innerHTML += `
+            <tr>
+              <td>${o.id}</td>
+              <td>${o.customerName}</td>
+              <td>${o.customerPhone}</td>
+              <td>${
+                o.orderDate ? new Date(o.orderDate).toLocaleString() : ""
+              }</td>
+              <td>${Number(o.totalAmount || 0).toFixed(2)}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1"
+                  onclick="fillOrderForm(${o.id}, '${(
+                o.customerName || ""
+              ).replace(/'/g, "\\'")}', '${(o.customerPhone || "").replace(
+                /'/g,
+                "\\'"
+              )}', '${o.totalAmount}')">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteOrder(${
+                  o.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+            });
+          });
+      }
+
+      function resetOrderForm() {
+        document.getElementById("orderForm").reset();
+        document.getElementById("orderId").value = "";
+      }
+
+      document
+        .getElementById("orderForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("orderId").value;
+          if (!id) {
+            alert("Select order from table to update.");
+            return;
+          }
+          const data = {
+            customerName: document.getElementById("orderCustomerName").value,
+            customerPhone: document.getElementById("orderCustomerPhone").value,
+            totalAmount: document.getElementById("orderTotalAmount").value,
+          };
+          fetch(`${ORDER_API}${id}/`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify(data),
+          }).then(() => {
+            resetOrderForm();
+            fetchOrdersAdmin();
+            loadOverview();
+          });
+        });
+
+      function fillOrderForm(id, name, phone, total) {
+        document.getElementById("orderId").value = id;
+        document.getElementById("orderCustomerName").value = name;
+        document.getElementById("orderCustomerPhone").value = phone;
+        document.getElementById("orderTotalAmount").value = total;
+      }
+
+      function deleteOrder(id) {
+        if (!confirm("Delete this Order?")) return;
+        fetch(`${ORDER_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(() => {
+          fetchOrdersAdmin();
+          loadOverview();
+        });
+      }
+
+      // ================= ORDERITEM CRUD =================
+      function fetchOrderItemsAdmin() {
+        fetch(ORDERITEM_API)
+          .then((res) => res.json())
+          .then((data) => {
+            const table = document.getElementById("orderItemTable");
+            table.innerHTML = "";
+            data.forEach((it) => {
+              const price = Number(it.price || 0);
+              const qty = Number(it.qty || 0);
+              const sub = price * qty;
+              table.innerHTML += `
+            <tr>
+              <td>${it.id}</td>
+              <td>${it.orderID || it.order}</td>
+              <td>${it.productName}</td>
+              <td>${qty}</td>
+              <td>${price.toFixed(2)}</td>
+              <td>${sub.toFixed(2)}</td>
+              <td>
+                <button class="btn btn-sm btn-warning me-1"
+                  onclick="editOrderItem(${it.id}, '${
+                it.orderID || it.order
+              }', '${(it.productName || "").replace(
+                /'/g,
+                "\\'"
+              )}', '${qty}', '${price}')">Edit</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteOrderItem(${
+                  it.id
+                })">Delete</button>
+              </td>
+            </tr>`;
+            });
+          });
+      }
+
+      function resetOrderItemForm() {
+        document.getElementById("orderItemForm").reset();
+        document.getElementById("orderItemId").value = "";
+      }
+
+      document
+        .getElementById("orderItemForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const id = document.getElementById("orderItemId").value;
+          const data = {
+            orderID: document.getElementById("orderItemOrderId").value,
+            productName: document.getElementById("orderItemProductName").value,
+            qty: document.getElementById("orderItemQty").value,
+            price: document.getElementById("orderItemPrice").value,
+          };
+          fetch(id ? `${ORDERITEM_API}${id}/` : ORDERITEM_API, {
+            method: id ? "PUT" : "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify(data),
+          }).then(() => {
+            resetOrderItemForm();
+            fetchOrderItemsAdmin();
+          });
+        });
+
+      function editOrderItem(id, orderID, productName, qty, price) {
+        document.getElementById("orderItemId").value = id;
+        document.getElementById("orderItemOrderId").value = orderID;
+        document.getElementById("orderItemProductName").value = productName;
+        document.getElementById("orderItemQty").value = qty;
+        document.getElementById("orderItemPrice").value = price;
+      }
+
+      function deleteOrderItem(id) {
+        if (!confirm("Delete this OrderItem?")) return;
+        fetch(`${ORDERITEM_API}${id}/`, {
+          method: "DELETE",
+          headers: { "X-CSRFToken": csrftoken },
+        }).then(fetchOrderItemsAdmin);
+      }
+
+      // ================= INIT =================
+      loadOverview();
+      fetchBanners();
+      fetchImageTypesAdmin();
+      fetchImages();
+      fetchMenus();
+      fetchMenuDetails();
+      loadCarousel();
+
+      fetchCategoriesAdmin();
+      fetchProductsAdmin();
+      fetchProductDetailsAdmin();
+      fetchProductDetailImagesAdmin();
+      fetchQRCodesAdmin();
+      fetchOrdersAdmin();
+      fetchOrderItemsAdmin();
+    </script>
+  </body>
+</html>
